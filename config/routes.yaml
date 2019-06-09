@@ -1,3 +1,12 @@
 index:
     path: /
     controller: App\Controller\IndexController::index
+login:
+    path: /login
+    controller: App\Controller\SecurityController::login
+logout:
+    path: /logout
+    methods: GET
+register:
+    path: /register
+    controller: App\Controller\RegistrationController::register
