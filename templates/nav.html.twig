@@ -1,0 +1,41 @@
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+
+        {# Logo #}
+
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Logo</a>
+        </div>
+
+        <div id="navbar" class="collapse navbar-collapse">
+
+            {# Navigation #}
+
+            <ul class="nav navbar-nav">
+                {% if app.request.get('_route') == 'index' %}
+                    <li class="active">
+                        <a href="#">Home</a>
+                    </li>
+                {% else %}
+                    <li>
+                        <a href="{{ path('index') }}">Home</a>
+                    </li>
+                {% endif %}
+            </ul>
+
+            {# Securiry #}
+
+            <ul class="nav navbar-nav pull-right">
+                {% if app.user %}
+                    <li class="pull-right">
+                        <a href="{{ path('logout') }}">Logout ({{ app.user.name }})</a>
+                    </li>
+                {% else %}
+                    <li class="pull-right">
+                        <a href="{{ path('login') }}">Login</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
