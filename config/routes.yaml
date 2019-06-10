@@ -10,3 +10,6 @@ logout:
 register:
     path: /register
     controller: App\Controller\RegistrationController::register
+activate_account:
+    path: /activate-account/{token}
+    controller: App\Controller\RegistrationController::activateAccount

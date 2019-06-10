@@ -27,13 +27,29 @@
 
             <ul class="nav navbar-nav pull-right">
                 {% if app.user %}
-                    <li class="pull-right">
+                    <li>
                         <a href="{{ path('logout') }}">Logout ({{ app.user.name }})</a>
                     </li>
                 {% else %}
-                    <li class="pull-right">
-                        <a href="{{ path('login') }}">Login</a>
-                    </li>
+                    {% if app.request.get('_route') == 'register' %}
+                        <li class="active">
+                            <a href="#">Registration</a>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a href="{{ path('register') }}">Registration</a>
+                        </li>
+                    {% endif %}
+
+                    {% if app.request.get('_route') == 'login' %}
+                        <li class="active">
+                            <a href="#">Login</a>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a href="{{ path('login') }}">Login</a>
+                        </li>
+                    {% endif %}
                 {% endif %}
             </ul>
         </div>

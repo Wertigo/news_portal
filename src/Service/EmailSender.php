@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\User;
 use Swift_Mailer as SwiftMailer;
 use Swift_Message as SwiftMessage;
 use Twig\Environment;
@@ -36,19 +37,20 @@ class EmailSender
     }
 
     /**
-     * @param $receiverEmail
-     * @param $name
+     * @param User $user
      * @return bool
      */
-    public function sendRegistrationCompleteEmail($receiverEmail, $name): bool
+    public function sendRegistrationCompleteEmail(User $user): bool
     {
         try {
             $message = (new SwiftMessage('Hello Email'))
-                ->setFrom('kdswto@gmail.com')
-                ->setTo($receiverEmail)
+                ->setSubject('Registration complete')
+                ->setFrom('web@aiti-pro.ru')
+                ->setTo($user->getEmail())
                 ->setBody(
                     $this->twig->render('emails/registration-complete.html.twig', [
-                        'name' => $name
+                        'name' => $user->getName(),
+                        'activateToken' => $user->getActivateToken(),
                     ]),
                     'text/html'
                 )
@@ -60,5 +62,10 @@ class EmailSender
 
             return false;
         }
+    }
+
+    public function sendActivationCompleteEmail(User $user): bool
+    {
+        // TODO: implement
     }
 }

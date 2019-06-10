@@ -5,5 +5,8 @@
 <body>
     <h1>Congratulation, registration complete.</h1>
     <p>User with name {{ name }} was created.</p>
+    <p>
+        Link to complete register <a href="{{ path('activate-account', {'token': activateToken}) }}" target="_blank"></a>
+    </p>
 </body>
 </html>

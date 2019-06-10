@@ -13,7 +13,6 @@ class IndexController extends AbstractController
      */
     public function index(EmailSender $emailSender)
     {
-        $emailSender->sendRegistrationCompleteEmail('kdswto@gmail.com', 'Daniil Karnaukhov');
         return $this->render('index/index.html.twig');
     }
 }

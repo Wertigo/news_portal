@@ -71,6 +71,11 @@ class User implements UserInterface
     private $status;
 
     /**
+     * @ORM\Column(type="text", length=511, name="activate_token")
+     */
+    private $activateToken;
+
+    /**
      * @return int|null
      */
     public function getId(): ?int
@@ -199,6 +204,25 @@ class User implements UserInterface
     public function setStatus(int $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getActivateToken()
+    {
+        return $this->activateToken;
+    }
+
+    /**
+     * @param mixed $activateToken
+     * @return User
+     */
+    public function setActivateToken($activateToken): User
+    {
+        $this->activateToken = $activateToken;
 
         return $this;
     }
