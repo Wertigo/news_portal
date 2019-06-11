@@ -9,19 +9,42 @@ use Psr\Log\LoggerInterface;
 class UserService
 {
     /**
-     * @param User $user
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
+
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
+     * UserService constructor.
      * @param EntityManagerInterface $entityManager
      * @param LoggerInterface $logger
+     */
+    public function __construct(EntityManagerInterface $entityManager, LoggerInterface $logger)
+    {
+        $this->entityManager = $entityManager;
+        $this->logger = $logger;
+    }
+
+    /**
+     * @param User $user
      * @return bool
      */
-    public function activateAccount(User $user, EntityManagerInterface $entityManager, LoggerInterface $logger): bool
+    public function activateAccount(User $user): bool
     {
-        if ($user) {
-            $user->setStatus(User::STATUS_ACTIVE);
-            $entityManager->persist($user);
-            $entityManager->flush();
-        } else {
-            $logger->error('No user presenterd for activation');
+        if (!$user) {
+            $this->logger->error('No user presenterd for activation');
+
+            return false;
         }
+
+        $user->setStatus(User::STATUS_ACTIVE);
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+
+        return true;
     }
 }

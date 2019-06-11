@@ -14,13 +14,33 @@
                 body {
                     padding-top: 50px;
                 }
+
+                .main-container {
+                    margin-top: 35px;
+                }
             </style>
         {% endblock %}
     </head>
     <body>
         {% include 'nav.html.twig' %}
 
-        <div class="container">
+        <div class="container main-container">
+            {% for msg in app.session.flashBag.get('success') %}
+                <div class="alert alert-success">
+                    {{ msg }}
+                </div>
+            {% endfor  %}
+            {% for msg in app.session.flashBag.get('error') %}
+                <div class="alert alert-danger">
+                    {{ msg }}
+                </div>
+            {% endfor  %}
+            {% for msg in app.session.flashBag.get('warning') %}
+                <div class="alert alert-warning">
+                    {{ msg }}
+                </div>
+            {% endfor  %}
+
             {% block body %}{% endblock %}
         </div>
 
