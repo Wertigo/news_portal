@@ -21,6 +21,28 @@
                         <a href="{{ path('index') }}">Home</a>
                     </li>
                 {% endif %}
+
+                {% if app.user %}
+                    {% if app.request.get('_route') == 'my-profile' %}
+                        <li class="active">
+                            <a href="#">My profile</a>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a href="{{ path('my-profile') }}">My profile</a>
+                        </li>
+                    {% endif %}
+
+                    {% if app.request.get('_route') == 'create-post' %}
+                        <li class="active">
+                            <a href="#">Create post</a>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a href="{{ path('create-post') }}">Create post</a>
+                        </li>
+                    {% endif %}
+                {% endif %}
             </ul>
 
             {# Security #}

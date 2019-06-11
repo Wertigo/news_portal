@@ -47,4 +47,21 @@ class UserService
 
         return true;
     }
+
+    /**
+     * @param User $user
+     * @return float
+     */
+    public function calculateRating(User $user): float
+    {
+        $posts = $user->getPosts();
+
+        $rating = 0.0;
+
+        foreach ($posts as $post) {
+            $rating += $post->getRating();
+        }
+
+        return $rating;
+    }
 }

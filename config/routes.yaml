@@ -1,6 +1,9 @@
 index:
     path: /
     controller: App\Controller\IndexController::index
+
+# Security
+
 login:
     path: /login
     controller: App\Controller\SecurityController::login
@@ -13,3 +16,15 @@ register:
 activate-account:
     path: /activate-account/{token}
     controller: App\Controller\RegistrationController::activateAccount
+
+# User
+my-profile:
+    path: /my-profile
+    methods: GET
+    controller: App\Controller\UserController::myProfile
+
+# Post
+create-post:
+    path: /create-post
+    methods: GET|POST
+    controller: App\Controller\PostController::createPost
