@@ -28,3 +28,10 @@ create-post:
     path: /create-post
     methods: GET|POST
     controller: App\Controller\PostController::createPost
+view-post:
+    path: /post/{post}
+    methods: GET
+    controller: App\Controller\PostController::view
+
+
+# API
