@@ -90,4 +90,11 @@ class Tag
 
         return $this;
     }
+
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->id,
+        ];
+    }
 }

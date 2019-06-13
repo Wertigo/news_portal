@@ -5,12 +5,27 @@ namespace App\Controller;
 use App\Entity\Post;
 use App\Factory\PostFactory;
 use App\Form\PostFormType;
+use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class PostController extends AbstractController
 {
+    /**
+     * @var ObjectManager
+     */
+    private $entityManager;
+
+    /**
+     * PostController constructor.
+     * @param ObjectManager $entityManager
+     */
+    public function __construct(ObjectManager $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+
     /**
      * @param Request $request
      * @param PostFactory $postFactory
@@ -25,9 +40,10 @@ class PostController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $author = $this->getUser();
             $post->setAuthor($author);
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($post);
-            $entityManager->flush();
+            $this->saveRelatedTags($post, $form->getData());
+
+            $this->entityManager->persist($post);
+            $this->entityManager->flush();
             $this->addFlash('success', 'Post draft - created.');
 
             return $this->redirectToRoute('view-post', [
@@ -38,6 +54,15 @@ class PostController extends AbstractController
         return $this->render('post/create-post.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @param Post $post
+     * @param $tags
+     */
+    private function saveRelatedTags(Post $post, $data)
+    {
+        dd($data);
     }
 
     /**
