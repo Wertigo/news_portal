@@ -6,7 +6,6 @@ use App\Entity\Post;
 use App\Factory\PostFactory;
 use App\Form\PostFormType;
 use App\Repository\TagRepository;
-use App\Service\PostService;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,6 +26,7 @@ class PostController extends AbstractController
     /**
      * PostController constructor.
      * @param ObjectManager $entityManager
+     * @param TagRepository $tagRepository
      */
     public function __construct(ObjectManager $entityManager, TagRepository $tagRepository)
     {
@@ -76,12 +76,11 @@ class PostController extends AbstractController
 
     /**
      * @param Post $post
-     * @param PostService $postService
      * @return Response
      */
-    public function view(Post $post, PostService $postService): Response
+    public function view(Post $post): Response
     {
-        if (!$postService->isPostPublished($post)) {
+        if (!$post->isPostPublished()) {
             throw $this->createNotFoundException('Post not published.');
         }
 
@@ -90,10 +89,38 @@ class PostController extends AbstractController
         ]);
     }
 
+    /**
+     * @param Post $post
+     * @return Response
+     */
     public function viewTemplate(Post $post): Response
     {
         return $this->render('post/view-template.html.twig', [
             'post' => $post,
+        ]);
+    }
+
+    public function update(Request $request, Post $post)
+    {
+        $form = $this->createForm(PostFormType::class, $post);
+        $form->handleRequest($request);
+
+//        if ($form->isSubmitted() && $form->isValid()) {
+//            $author = $this->getUser();
+//            $post->setAuthor($author);
+//            $this->saveRelatedTags($post, $request);
+//
+//            $this->entityManager->persist($post);
+//            $this->entityManager->flush();
+//            $this->addFlash('success', 'Post draft - created.');
+//
+//            return $this->redirectToRoute('view-post', [
+//                'post' => $post->getId(),
+//            ]);
+//        }
+
+        return $this->render('post/update.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 }

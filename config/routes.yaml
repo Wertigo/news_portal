@@ -36,6 +36,10 @@ view-template-post:
     path: /post/{post}/template
     methods: GET
     controller: App\Controller\PostController::viewTemplate
+update-post:
+    path: /post/{post}/update
+    methods: GET|POST
+    controller: App\Controller\PostController::update
 
 
 # Api

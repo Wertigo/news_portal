@@ -30,7 +30,13 @@
                             <td>{{ post.createdAt }}</td>
                             <td>{{ post.updatedAt }}</td>
                             <td>
-                                <a href="{{ path('view-template-post', {'post': post.id}) }}">View template post</a>
+                                <a href="{{ path('view-template-post', {'post': post.id}) }}">View template</a>
+                                {% if post.isPostAvailableForEditing %}
+                                    <a href="{{ path('update-post', {'post': post.id}) }}">Edit</a>
+                                {% endif %}
+                                {% if post.isPostAvailableForEditing %}
+                                    {# Publish link #}
+                                {% endif %}
                             </td>
                         </tr>
                     {% endfor %}

@@ -284,4 +284,20 @@ class Post
             $this->setCreatedAt(new DateTime('now'));
         }
     }
+
+    /**
+     * @return bool
+     */
+    public function isPostPublished(): bool
+    {
+        return static::STATUS_PUBLISHED === $this->getStatus();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPostAvailableForEditing(): bool
+    {
+        return Post::STATUS_DRAFT === $this->getStatus();
+    }
 }
