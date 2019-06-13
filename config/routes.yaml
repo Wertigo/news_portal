@@ -34,4 +34,4 @@ view-post:
     controller: App\Controller\PostController::view
 
 
-# API
+# Api
