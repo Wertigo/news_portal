@@ -212,4 +212,11 @@ class Post
 
         return $this;
     }
+
+    public function setTags(array $tags): self
+    {
+        $this->tags = new ArrayCollection($tags);
+
+        return $this;
+    }
 }

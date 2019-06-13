@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Post;
 use App\Factory\PostFactory;
 use App\Form\PostFormType;
+use App\Repository\TagRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,12 +19,18 @@ class PostController extends AbstractController
     private $entityManager;
 
     /**
+     * @var TagRepository
+     */
+    private $tagRepository;
+
+    /**
      * PostController constructor.
      * @param ObjectManager $entityManager
      */
-    public function __construct(ObjectManager $entityManager)
+    public function __construct(ObjectManager $entityManager, TagRepository $tagRepository)
     {
         $this->entityManager = $entityManager;
+        $this->tagRepository = $tagRepository;
     }
 
     /**
@@ -40,7 +47,7 @@ class PostController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $author = $this->getUser();
             $post->setAuthor($author);
-            $this->saveRelatedTags($post, $form->getData());
+            $this->saveRelatedTags($post, $request);
 
             $this->entityManager->persist($post);
             $this->entityManager->flush();
@@ -60,9 +67,10 @@ class PostController extends AbstractController
      * @param Post $post
      * @param $tags
      */
-    private function saveRelatedTags(Post $post, $data)
+    private function saveRelatedTags(Post $post, Request $request)
     {
-        dd($data);
+        $submitedTagIds = $request->get('post_form')['post_tags'];
+        $post->setTags($this->tagRepository->findBy(['id' => $submitedTagIds]));
     }
 
     /**
