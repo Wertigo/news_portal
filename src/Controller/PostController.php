@@ -6,6 +6,7 @@ use App\Entity\Post;
 use App\Factory\PostFactory;
 use App\Form\PostFormType;
 use App\Repository\TagRepository;
+use App\Service\PostService;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -75,11 +76,23 @@ class PostController extends AbstractController
 
     /**
      * @param Post $post
+     * @param PostService $postService
      * @return Response
      */
-    public function view(Post $post): Response
+    public function view(Post $post, PostService $postService): Response
     {
+        if (!$postService->isPostPublished($post)) {
+            throw $this->createNotFoundException('Post not published.');
+        }
+
         return $this->render('post/view.html.twig', [
+            'post' => $post,
+        ]);
+    }
+
+    public function viewTemplate(Post $post): Response
+    {
+        return $this->render('post/view-template.html.twig', [
             'post' => $post,
         ]);
     }

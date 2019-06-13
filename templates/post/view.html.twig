@@ -4,31 +4,14 @@
 
 {% block body %}
     <div class="post-view">
-        <table class="table table-bordered table-hover">
-            <tbody>
-                <tr>
-                    <th>ID</th>
-                    <td>{{ post.id }}</td>
-                </tr>
-                <tr>
-                    <th>Title</th>
-                    <td>{{ post.title }}</td>
-                </tr>
-                <tr>
-                    <th>Content</th>
-                    <td>{{ post.content|escape }}</td>
-                </tr>
-                <tr>
-                    <th>Tags</th>
-                    <td>
-                        {% if post.tags|length > 0 %}
-                            {% for  tag in post.tags %}
-                                <label class="label label-success">{{ tag.name }}</label>
-                            {% endfor %}
-                        {% endif %}
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <h1 class="h3">{{ post.title }}</h1>
+        <div class="post-content">
+            {{ post.content|raw }}
+        </div>
+        <div class="post-tags">
+            {% for  tag in post.tags %}
+                <label class="label label-success">{{ tag.name }}</label>
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}

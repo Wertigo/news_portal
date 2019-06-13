@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Post: {{ post.id }}{% endblock %}
+
+{% block body %}
+    <div class="post-view">
+        <table class="table table-bordered table-hover">
+            <tbody>
+                <tr>
+                    <th>ID</th>
+                    <td>{{ post.id }}</td>
+                </tr>
+                <tr>
+                    <th>Title</th>
+                    <td>{{ post.title }}</td>
+                </tr>
+                <tr>
+                    <th>Content</th>
+                    <td>{{ post.content|escape }}</td>
+                </tr>
+                <tr>
+                    <th>Tags</th>
+                    <td>
+                        {% if post.tags|length > 0 %}
+                            {% for  tag in post.tags %}
+                                <label class="label label-success">{{ tag.name }}</label>
+                            {% endfor %}
+                        {% endif %}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

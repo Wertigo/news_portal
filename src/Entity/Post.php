@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use \App\Entity\Tag;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PostRepository")
@@ -79,9 +79,21 @@ class Post
      */
     private $tags;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $created_at;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $updated_at;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
+        $this->created_at = new DateTime();
+        $this->updated_at = new DateTime();
     }
 
     /**
@@ -218,5 +230,58 @@ class Post
         $this->tags = new ArrayCollection($tags);
 
         return $this;
+    }
+
+    /**
+     * @param bool $asString
+     * @return mixed
+     */
+    public function getCreatedAt($asString = true)
+    {
+        if ($asString) {
+            return $this->created_at->format('Y-m-d H:i:s');
+        }
+
+        return $this->created_at;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $created_at): self
+    {
+        $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    /**
+     * @param bool $asString
+     * @return mixed
+     */
+    public function getUpdatedAt($asString = true)
+    {
+        if ($asString) {
+            return $this->updated_at->format('Y-m-d H:i:s');
+        }
+
+        return $this->updated_at;
+    }
+
+    public function setUpdatedAt(\DateTimeInterface $updated_at): self
+    {
+        $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function updateTimestamps(): void
+    {
+        $this->setUpdatedAt(new DateTime('now'));
+
+        if ($this->getCreatedAt() === null) {
+            $this->setCreatedAt(new DateTime('now'));
+        }
     }
 }
