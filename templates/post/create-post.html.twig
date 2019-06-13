@@ -7,5 +7,30 @@
 {% endblock %}
 
 {% block javascripts %}
-    {% include 'post/form-js.html.twig' %}
+    <script type="text/javascript">
+        $(function() {
+            // Called by Select2 to determine autocomplete request
+            // query string parameters
+            const getAjaxListData = function(params) {
+                return {
+                    q: params.term,
+                    p: params.page
+                };
+            };
+
+            // Turn the plain SELECT input into a Select2 element
+
+            $('#post_form_post_tags').select2({
+                placeholder: 'Search for a tag',
+                ajax: {
+                    url: '{{ path('api-get-all-tags') }}',
+                    dataType: 'json',
+                    delay: 250,
+                    data: getAjaxListData,
+                    cache: true,
+                    tags: true
+                }
+            });
+        });
+    </script>
 {% endblock %}
