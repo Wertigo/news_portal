@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Post;
+use App\Repository\TagRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -13,11 +14,24 @@ use FOS\CKEditorBundle\Form\Type\CKEditorType;
 class PostFormType extends AbstractType
 {
     /**
+     * @var TagRepository
+     */
+    private $tagRepository;
+
+    public function __construct(TagRepository $tagRepository)
+    {
+        $this->tagRepository = $tagRepository;
+    }
+
+    /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        /** @var Post $post */
+        $post = $options['data'];
+
         $builder
             ->add('title', TextType::class)
             ->add('content', CKEditorType::class)

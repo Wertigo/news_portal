@@ -13,6 +13,7 @@
         // Turn the plain SELECT input into a Select2 element
 
         $('#post_form_post_tags').select2({
+            placeholder: 'Search for a tag',
             ajax: {
                 url: '{{ path('api-get-all-tags') }}',
                 dataType: 'json',
@@ -23,5 +24,4 @@
             }
         });
     });
-
 </script>

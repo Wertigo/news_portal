@@ -43,10 +43,6 @@ update-post:
 
 
 # Api
-api-search-tags-except-post-tags:
-    path: /api/post/search-tags-except-post-tags/{tag}
-    methods: GET|POST
-    controller: App\Controller\Api\PostController::searchTagsExceptPostTags
 api-get-all-tags:
     path: /api/tag
     methods: GET
