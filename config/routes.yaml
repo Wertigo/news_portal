@@ -45,7 +45,10 @@ update-post:
     path: /post/{post}/update
     methods: GET|POST
     controller: App\Controller\PostController::update
-
+send-post-to-moderation:
+    path: /post/{post}/moderate-post
+    methods: POST
+    controller: App\Controller\PostController::moderatePost
 
 # Api
 api-get-all-tags:

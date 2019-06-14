@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Post: {{ post.id }}{% endblock %}
+{% block title %}Template post: {{ post.id }}{% endblock %}
 
 {% block body %}
     <div class="post-view">
@@ -13,6 +13,14 @@
                 <tr>
                     <th>Title</th>
                     <td>{{ post.title }}</td>
+                </tr>
+                <tr>
+                    <th>Status</th>
+                    <td>{{ post.status }}</td>
+                </tr>
+                <tr>
+                    <th>Rating</th>
+                    <td>{{ post.rating }}</td>
                 </tr>
                 <tr>
                     <th>Content</th>
@@ -30,5 +38,10 @@
                 </tr>
             </tbody>
         </table>
+        <div class="controls">
+            {% if post.isPostPublished %}
+                <a href="{{ path('view-post', {'post': post.id}) }}" class="btn btn-success" target="_blank">View</a>
+            {% endif %}
+        </div>
     </div>
 {% endblock %}

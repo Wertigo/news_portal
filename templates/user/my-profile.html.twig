@@ -17,6 +17,7 @@
                     <tr>
                         <th>Title</th>
                         <th>Status</th>
+                        <th>Rating</th>
                         <th>Created at</th>
                         <th>Updated at</th>
                         <th>Actions</th>
@@ -27,6 +28,7 @@
                         <tr>
                             <td>{{ post.title }}</td>
                             <td>{{ post.status }}</td>
+                            <td>{{ post.rating }}</td>
                             <td>{{ post.createdAt }}</td>
                             <td>{{ post.updatedAt }}</td>
                             <td>
@@ -34,8 +36,10 @@
                                 {% if post.isPostAvailableForEditing %}
                                     <a href="{{ path('update-post', {'post': post.id}) }}">Edit</a>
                                 {% endif %}
-                                {% if post.isPostAvailableForEditing %}
-                                    {# Publish link #}
+                                {% if post.isPostCanBeModerate %}
+                                    <form action="{{ path('send-post-to-moderation', {'post': post.id}) }}" method="post">
+                                        <input type="submit" class="link-button" value="Publish" />
+                                    </form>
                                 {% endif %}
                             </td>
                         </tr>

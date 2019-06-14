@@ -302,6 +302,14 @@ class Post
     /**
      * @return bool
      */
+    public function isPostCanBeModerate(): bool
+    {
+        return static::STATUS_DRAFT === $this->getStatus();
+    }
+
+    /**
+     * @return bool
+     */
     public function isPostAvailableForEditing(): bool
     {
         return Post::STATUS_DRAFT === $this->getStatus();

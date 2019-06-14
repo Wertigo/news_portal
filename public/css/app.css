@@ -68,3 +68,16 @@
 .comment-view:last-child {
     margin-bottom: 0px;
 }
+
+.link-button {
+    border: none;
+    background-color: transparent;
+    color: #337ab7;
+    display: inline;
+    padding: 0;
+}
+
+.link-button:hover {
+    text-decoration: underline;
+    color: #23527c;
+}

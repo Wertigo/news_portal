@@ -27,7 +27,11 @@
                         <td>{{ post.createdAt }}</td>
                         <td>{{ post.updatedAt }}</td>
                         <td>
-                            <a href="{{ path('view-post', {'post': post.id}) }}" target="_blank">View</a>
+                            {% if post.isPostPublished %}
+                                <a href="{{ path('view-post', {'post': post.id}) }}" target="_blank">View</a>
+                            {% else %}
+                                <a href="{{ path('view-template-post', {'post': post.id}) }}" target="_blank">View template</a>
+                            {% endif %}
                         </td>
                     </tr>
                 {% endfor %}
