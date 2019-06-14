@@ -22,6 +22,11 @@ my-profile:
     path: /my-profile
     methods: GET
     controller: App\Controller\UserController::myProfile
+view-author:
+    path: /author/{author}
+    methods: GET
+    controller: App\Controller\UserController::authorView
+
 
 # Post
 create-post:

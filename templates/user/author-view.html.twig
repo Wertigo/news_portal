@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My profile: {{ author.name }}{% endblock %}
+
+{% block body %}
+    <h3 class="h3">Author: {{ author.name }}</h3>
+    <div class="jumbotron">
+        <p>Email: {{ author.email }}</p>
+        <p>Rating: {{ rating }}</p>
+    </div>
+    <div>
+        <h3 class="h3">Publications</h3>
+        {% if author.posts|length > 0 %}
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Created at</th>
+                    <th>Updated at</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for post in author.posts %}
+                    <tr>
+                        <td>{{ post.title }}</td>
+                        <td>{{ post.createdAt }}</td>
+                        <td>{{ post.updatedAt }}</td>
+                        <td>
+                            <a href="{{ path('view-post', {'post': post.id}) }}" target="_blank">View</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+{% endblock %}

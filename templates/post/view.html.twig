@@ -5,13 +5,29 @@
 {% block body %}
     <div class="post-view">
         <h1 class="h3">{{ post.title }}</h1>
-        <div class="post-content">
-            {{ post.content|raw }}
-        </div>
         <div class="post-tags">
             {% for  tag in post.tags %}
                 <label class="label label-success">{{ tag.name }}</label>
             {% endfor %}
         </div>
+        <div class="post-content">
+            {{ post.content|raw }}
+        </div>
+        <div class="author">
+            Author: <a href="{{ path('view-author', {'author': post.author.id}) }} ">{{ post.author.name }}</a>
+        </div>
+        <div class="rating">
+            <span>Rating: {{ post.rating }}</span>
+        </div>
+        {% if post.comments|length > 0 %}
+            <div class="comments">
+                <p class="h3">Comments</p>
+                <div class="comment-list">
+                    {% for comment in post.comments %}
+                        {% include 'comment/view.html.twig' %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
     </div>
 {% endblock %}

@@ -89,11 +89,17 @@ class Post
      */
     private $updated_at;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="post")
+     */
+    private $comments;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
         $this->created_at = new DateTime();
         $this->updated_at = new DateTime();
+        $this->comments = new ArrayCollection();
     }
 
     /**
@@ -299,5 +305,44 @@ class Post
     public function isPostAvailableForEditing(): bool
     {
         return Post::STATUS_DRAFT === $this->getStatus();
+    }
+
+    /**
+     * @return string
+     */
+    public function getShortContent()
+    {
+        return substr(strip_tags($this->getContent()), 0, 300) . ' ...';
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->contains($comment)) {
+            $this->comments->removeElement($comment);
+            // set the owning side to null (unless already changed)
+            if ($comment->getPost() === $this) {
+                $comment->setPost(null);
+            }
+        }
+
+        return $this;
     }
 }

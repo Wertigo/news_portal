@@ -4,9 +4,11 @@ namespace App\DataFixtures;
 
 use App\Entity\User;
 use App\Entity\Post;
+use App\Factory\CommentFactory;
 use App\Factory\PostFactory;
 use App\Factory\TagFactory;
 use App\Factory\UserFactory;
+use App\Repository\PostRepository;
 use App\Repository\TagRepository;
 use App\Repository\UserRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -36,6 +38,11 @@ class AppFixtures extends Fixture
     private $postFactory;
 
     /**
+     * @var CommentFactory
+     */
+    private $commentFactory;
+
+    /**
      * @var UserPasswordEncoderInterface
      */
     private $passwordEncoder;
@@ -51,9 +58,19 @@ class AppFixtures extends Fixture
     private $tagRepository;
 
     /**
+     * @var PostRepository
+     */
+    private $postRepository;
+
+    /**
      * @var array
      */
     private $activatedUsers = [];
+
+    /**
+     * @var array
+     */
+    private $publishedPosts = [];
 
     /**
      * @var array
@@ -70,8 +87,10 @@ class AppFixtures extends Fixture
         UserFactory $userFactory,
         TagFactory $tagFactory,
         PostFactory $postFactory,
+        CommentFactory $commentFactory,
         UserRepository $userRepository,
         TagRepository $tagRepository,
+        PostRepository $postRepository,
         UserPasswordEncoderInterface $passwordEncoder
     ) {
         $this->userFactory = $userFactory;
@@ -80,6 +99,8 @@ class AppFixtures extends Fixture
         $this->userRepository = $userRepository;
         $this->tagRepository = $tagRepository;
         $this->passwordEncoder = $passwordEncoder;
+        $this->postRepository = $postRepository;
+        $this->commentFactory = $commentFactory;
     }
 
     /**
@@ -93,6 +114,7 @@ class AppFixtures extends Fixture
         $this->createUsers();
         $this->createTags();
         $this->createPosts();
+        $this->createComments();
     }
 
     /**
@@ -371,5 +393,59 @@ EOF
         $index = array_rand($statuses);
 
         return $statuses[$index];
+    }
+
+    /**
+     * @return mixed
+     * @throws \Exception
+     */
+    private function getRandomPublishedPost()
+    {
+        if (empty($this->publishedPosts)) {
+            $this->publishedPosts = $this->postRepository->findPublishedPosts();
+        }
+
+        if (empty($this->publishedPosts)) {
+            throw new \Exception('No published posts');
+        }
+
+        $index = array_rand($this->publishedPosts);
+
+        return $this->publishedPosts[$index];
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function createComments()
+    {
+        for ($i = 0; $i < 10; $i++) {
+            $comment = $this->commentFactory->createNew();
+            $comment->setAuthor($this->getRandomAuthor())
+                ->setPost($this->getRandomPublishedPost())
+                ->setText($this->getRandomText())
+            ;
+            $this->manager->persist($comment);
+        }
+
+        $this->manager->flush();
+    }
+
+    /**
+     * @return mixed
+     */
+    private function getRandomText()
+    {
+        $texts = [
+            'Awesome, best post!',
+            'Maybe you can do something more better?',
+            'Cool, any continue ?',
+            'Точно по теме пост?',
+            'Когда уже будет что-то интересное?',
+            'Можно я сегодня уйду пораньше?',
+        ];
+        $index = array_rand($texts);
+
+        return $texts[$index];
     }
 }

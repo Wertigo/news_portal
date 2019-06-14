@@ -3,5 +3,12 @@
 {% block title %}Index{% endblock %}
 
 {% block body %}
-    <h1>Hello</h1>
+    <h1 class="h3">News portal</h1>
+    {% if posts|length > 0 %}
+        <div class="index-posts">
+            {% for post in posts %}
+                {% include 'post/list-item.html.twig' %}
+            {% endfor %}
+        </div>
+    {% endif %}
 {% endblock %}

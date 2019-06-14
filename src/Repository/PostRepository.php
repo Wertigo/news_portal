@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Post;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -21,5 +22,48 @@ class PostRepository extends ServiceEntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Post::class);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function findPostsForIndexPage()
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.status = :status')
+            ->setParameter('status', Post::STATUS_PUBLISHED)
+            ->orderBy('p.created_at', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * @param User $user
+     * @return mixed
+     */
+    public function findPublishedPostsByAuthor(User $author)
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.status = :status')
+            ->setParameter('status', Post::STATUS_PUBLISHED)
+            ->andWhere('p.author = :author')
+            ->setParameter('author', $author)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function findPublishedPosts()
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.status = :status')
+            ->setParameter('status', Post::STATUS_PUBLISHED)
+            ->getQuery()
+            ->getResult()
+        ;
     }
 }
