@@ -13,11 +13,15 @@
         <div class="post-content">
             {{ post.content|raw }}
         </div>
-        <div class="author">
-            Author: <a href="{{ path('view-author', {'author': post.author.id}) }} ">{{ post.author.name }}</a>
-        </div>
-        <div class="rating">
-            <span>Rating: {{ post.rating }}</span>
+        <div class="additional-info">
+            <div class="author">
+                Author: <a href="{{ path('view-author', {'author': post.author.id}) }} ">{{ post.author.name }}</a>
+            </div>
+            <div class="rating">
+                <i class="fas fa-thumbs-up" id="rating-up" data-url="{{ path('api-post-rating-up', {'post': post.id}) }}"></i>
+                Rating:<span id="rating-counter">{{ post.rating }}</span>
+                <i class="fas fa-thumbs-down" id="rating-down" data-url="{{ path('api-post-rating-down', {'post': post.id}) }}"></i>
+            </div>
         </div>
         {% if post.comments|length > 0 %}
             <div class="comments">
@@ -30,4 +34,8 @@
             </div>
         {% endif %}
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/post-view.js') }}"></script>
 {% endblock %}

@@ -81,3 +81,34 @@
     text-decoration: underline;
     color: #23527c;
 }
+
+.additional-info:after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+.additional-info .author {
+    float: left;
+    width: 10%;
+}
+
+.additional-info .rating {
+    width: 30%;
+    float: right;
+    text-align: right;
+}
+
+.additional-info .rating i {
+    cursor: pointer;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.additional-info .rating i:first-child {
+    margin-left: 0;
+}
+
+.additional-info .rating i:last-child {
+    margin-right: 0;
+}
