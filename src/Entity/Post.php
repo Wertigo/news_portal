@@ -34,6 +34,27 @@ class Post
     const STATUS_DECLINED = 3;
 
     /**
+     * @var string
+     */
+    const STATUS_TEXT_DRAFT = 'Draft';
+
+    /**
+     * @var string
+     */
+    const STATUS_TEXT_MODERATION_CHECK = 'Moderation check';
+
+    /**
+     * @var string
+     */
+    const STATUS_TEXT_PUBLISHED = 'Published';
+
+    /**
+     * @var string
+     */
+    const STATUS_TEXT_DECLINED = 'Declined';
+
+
+    /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -352,5 +373,24 @@ class Post
         }
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTextStatus(): string
+    {
+        switch ($this->getStatus()) {
+            case static::STATUS_DRAFT :
+                return static::STATUS_TEXT_DRAFT;
+            case static::STATUS_MODERATION_CHECK :
+                return static::STATUS_TEXT_MODERATION_CHECK;
+            case static::STATUS_PUBLISHED :
+                return static::STATUS_TEXT_PUBLISHED;
+            case static::STATUS_DECLINED :
+                return static::STATUS_TEXT_DECLINED;
+            default:
+                return '';
+        }
     }
 }

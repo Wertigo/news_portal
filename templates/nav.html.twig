@@ -42,6 +42,18 @@
                             <a href="{{ path('create-post') }}">Create post</a>
                         </li>
                     {% endif %}
+
+                    {% if is_granted('ROLE_ADMIN') %}
+                        {% if app.request.get('_route') == 'admin-publications' %}
+                            <li class="active">
+                                <a href="#">Admin: Publications</a>
+                            </li>
+                        {% else %}
+                            <li>
+                                <a href="{{ path('admin-publications') }}">Admin: Publications</a>
+                            </li>
+                        {% endif %}
+                    {% endif %}
                 {% endif %}
             </ul>
 

@@ -31,4 +31,38 @@ class PostService
         $this->manager->persist($post);
         $this->manager->flush();
     }
+
+    /**
+     * @param Post $post
+     * @return bool
+     */
+    public function publishPost(Post $post): bool
+    {
+        try {
+            $post->setStatus(Post::STATUS_PUBLISHED);
+            $this->manager->persist($post);
+            $this->manager->flush();
+        } catch (\Exception $e) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param Post $post
+     * @return bool
+     */
+    public function declinePost(Post $post): bool
+    {
+        try {
+            $post->setStatus(Post::STATUS_DECLINED);
+            $this->manager->persist($post);
+            $this->manager->flush();
+        } catch (\Exception $e) {
+            return false;
+        }
+
+        return true;
+    }
 }

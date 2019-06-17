@@ -29,4 +29,10 @@
     php bin/console doctrine:fixtures:load --append
     ```
 
+### Commands
+1. Make user admin:
+    ```bash
+    php bin\console user:set-user-admin {userId}
+    ```
+    userId - id пользователя
 

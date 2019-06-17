@@ -55,6 +55,10 @@ api-get-all-tags:
     path: /api/tag
     methods: GET
     controller: App\Controller\Api\TagController::index
+api-get-all-users:
+    path: /api/user
+    methods: GET
+    controller: App\Controller\Api\UserController::index
 api-post-rating-up:
     path: /api/post/rating-up/{post}
     methods: POST
@@ -63,3 +67,17 @@ api-post-rating-down:
     path: /api/post/rating-down/{post}
     methods: POST
     controller: App\Controller\Api\PostController::ratingDown
+
+# Admin
+admin-publications:
+    path: /admin/publications
+    methods: GET|POST
+    controller: App\Controller\AdminController::publications
+admin-publish-post:
+    path: /admin/post/publish/{post}
+    methods: PUT
+    controller: App\Controller\AdminController::publishPost
+admin-decline-post:
+    path: /admin/post/decline/{post}
+    methods: PUT
+    controller: App\Controller\AdminController::declinePost

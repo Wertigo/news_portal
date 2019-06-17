@@ -66,4 +66,53 @@ class PostRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    /**
+     * Available indexes for $params array:
+     * author - user id (int)
+     * status - post status (int)
+     * createdFrom = datetime: yyyy-mm-dd (string)
+     * createdTo = datetime: yyyy-mm-dd (string)
+     *
+     *
+     * @param array $params
+     * @param bool $asQuery
+     * @return \Doctrine\ORM\Query|mixed
+     */
+    public function findAllExceptDrafts(array $params = [], $asQuery = false)
+    {
+        $builder = $this->createQueryBuilder('p')
+            ->where('p.status <> :status')
+            ->setParameter('status', Post::STATUS_PUBLISHED)
+            ->orderBy('p.created_at', 'ASC')
+        ;
+
+        if (isset($params['author']) && $params['author']) {
+            $builder->andWhere('p.author = :author')
+                ->setParameter('author', $params['author']);
+        }
+
+        if (isset($params['status']) && $params['status']) {
+            $builder->andWhere('p.status = :statusParam')
+                ->setParameter('statusParam', $params['status']);
+        }
+
+        if (isset($params['createdFrom']) && $params['createdFrom']) {
+            $builder->andWhere('p.created_at >= :createdFrom')
+                ->setParameter('createdFrom', $params['createdFrom']);
+        }
+
+        if (isset($params['createdTo']) && $params['createdTo']) {
+            $builder->andWhere('p.created_at <= :createdTo')
+                ->setParameter('createdTo', $params['createdTo']);
+        }
+
+        $query = $builder->getQuery();
+
+        if ($asQuery) {
+            return $query;
+        }
+
+        return $query->getResult();
+    }
 }

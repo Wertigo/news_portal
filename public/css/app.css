@@ -112,3 +112,35 @@
 .additional-info .rating i:last-child {
     margin-right: 0;
 }
+
+.filter-form:after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+.pagination-widget:after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+.pagination-widget .pagination {
+    border: 1px solid black;
+    padding: 10px;
+    float: right
+}
+
+.pagination-widget .pagination .page, .pagination-widget .pagination .next, .pagination-widget .pagination .last, .pagination-widget .pagination .current, .pagination-widget .pagination .first {
+    padding: 2px;
+    margin-right: 5px;
+}
+
+.pagination-widget .pagination .page {
+
+}
+
+.pagination-widget .pagination .current {
+    padding-left: 8px;
+    padding-right: 8px;
+}
