@@ -60,6 +60,6 @@ api-post-rating-up:
     methods: POST
     controller: App\Controller\Api\PostController::ratingUp
 api-post-rating-down:
-    path: /api/post/rating-up/{post}
+    path: /api/post/rating-down/{post}
     methods: POST
     controller: App\Controller\Api\PostController::ratingDown

@@ -25,7 +25,7 @@ $(document).ready(function () {
     $ratingDownButton.click(function () {
         $.ajax({
             type: 'POST',
-            url: upUrl,
+            url: downUrl,
             dataType: 'json',
             success: handleRatingChangeResponse
         });
