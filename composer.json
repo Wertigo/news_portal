@@ -19,6 +19,7 @@
         "symfony/serializer": "4.3.*",
         "symfony/swiftmailer-bundle": "^3.2",
         "symfony/validator": "4.3.*",
+        "symfony/webpack-encore-bundle": "^1.6",
         "symfony/yaml": "4.3.*"
     },
     "config": {

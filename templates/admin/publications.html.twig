@@ -95,31 +95,3 @@
     {% endif %}
     <p class="text-right">Total posts: {{ pagination.getTotalItemCount }}</p>
 {% endblock %}
-
-{% block javascripts %}
-    <script type="text/javascript">
-        $(function() {
-            // Called by Select2 to determine autocomplete request
-            // query string parameters
-            const getAjaxListData = function(params) {
-                return {
-                    q: params.term,
-                    p: params.page
-                };
-            };
-
-            // Turn the plain SELECT input into a Select2 element
-            $('#publications_form_author').select2({
-                placeholder: 'Search for a user',
-                ajax: {
-                    url: '{{ path('api-get-all-users') }}',
-                    dataType: 'json',
-                    delay: 250,
-                    data: getAjaxListData,
-                    cache: true,
-                    tags: true
-                }
-            });
-        });
-    </script>
-{% endblock %}

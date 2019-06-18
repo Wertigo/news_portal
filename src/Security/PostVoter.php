@@ -14,6 +14,11 @@ class PostVoter extends Voter
      */
     const UPDATE = 'update';
 
+    /**
+     * @param string $attribute
+     * @param mixed $subject
+     * @return bool
+     */
     protected function supports($attribute, $subject)
     {
         if (!in_array($attribute, [static::UPDATE])) {
@@ -27,6 +32,13 @@ class PostVoter extends Voter
         return true;
     }
 
+    /**
+     * @param string $attribute
+     * @param mixed $subject
+     * @param TokenInterface $token
+     * @return bool
+     * @throws \Exception
+     */
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
     {
         $user = $token->getUser();
@@ -39,6 +51,8 @@ class PostVoter extends Voter
         switch ($attribute) {
             case static::UPDATE:
                 return $this->canUpdate($subject, $user);
+            default:
+                throw new \Exception("Unknown attribute $attribute");
         }
     }
 

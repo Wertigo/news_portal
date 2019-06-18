@@ -69,31 +69,3 @@
         {% include 'utils/pagination.html.twig' %}
     </div>
 {% endblock %}
-
-{% block javascripts %}
-    <script type="text/javascript">
-        $(function() {
-            // Called by Select2 to determine autocomplete request
-            // query string parameters
-            const getAjaxListData = function(params) {
-                return {
-                    q: params.term,
-                    p: params.page
-                };
-            };
-
-            // Turn the plain SELECT input into a Select2 element
-            $('#user_list_search_user').select2({
-                placeholder: 'Search for a user',
-                ajax: {
-                    url: '{{ path('api-get-all-users') }}',
-                    dataType: 'json',
-                    delay: 250,
-                    data: getAjaxListData,
-                    cache: true,
-                    tags: true
-                }
-            });
-        });
-    </script>
-{% endblock %}

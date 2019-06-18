@@ -1,3 +1,8 @@
+### Requirements
+1. PHP >= 7.3
+2. Mysql >= 8.0
+3. Yarn
+4. 
 ### Install
 1. Composer install
     ```bash
@@ -20,7 +25,11 @@
     ```bash
     php bin/console assets:install --symlink
     ```
-7. Load fixtures (if needed):
+7. Install node_modules:
+    ```bash
+    yarn install
+    ```
+N. Load fixtures (if needed):
     ```bash
     php bin/console doctrine:fixtures:load
     ```
