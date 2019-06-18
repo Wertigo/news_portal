@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin - User list{% endblock %}
+
+{% block body %}
+    <h1 class="h3">Admin - User list</h1>
+    <div class="admin-user-list">
+        {% if pagination.getTotalItemCount > 0 %}
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for user in pagination %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.status }}</td>
+                        <td>
+                            {#<a href="{{ path('view-template-post', {'post': post.id}) }}">View post template</a>#}
+                            {#<a href="{{ path('admin-publish-post', {'post': post.id}) }}">Publish</a>#}
+                            {#<a href="{{ path('admin-decline-post', {'post': post.id}) }}">Decline</a>#}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+        {% include 'utils/pagination.html.twig' %}
+    </div>
+{% endblock %}

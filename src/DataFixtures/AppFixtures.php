@@ -111,10 +111,10 @@ class AppFixtures extends Fixture
     {
         $this->manager = $manager;
 
-        //$this->createUsers();
-        //$this->createTags();
+        $this->createUsers();
+        $this->createTags();
         $this->createPosts();
-        //$this->createComments();
+        $this->createComments();
     }
 
     /**
@@ -131,6 +131,10 @@ class AppFixtures extends Fixture
                 )
                 ->setEmail("email$i@gmail.com")
             ;
+
+            if ($i % 6 === 0) {
+                $user->setStatus(User::STATUS_BLOCKED);
+            }
 
             if ($i % 2 === 0) {
                 $user->setStatus(User::STATUS_ACTIVE);

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Post;
 use App\Form\PublicationsFormType;
 use App\Repository\PostRepository;
+use App\Repository\UserRepository;
 use App\Service\PostService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Knp\Component\Pager\PaginatorInterface;
@@ -15,7 +16,12 @@ class AdminController extends AbstractController
     /**
      * @var int
      */
-    const PAGINATION_LIMIT_PER_PAGE = 10;
+    const PAGINATION_PUBLICATIONS_LIMIT_PER_PAGE = 10;
+
+    /**
+     * @var int
+     */
+    const PAGINATION_USER_LIST_LIMIT_PER_PAGE = 10;
 
     /**
      * @var PostService
@@ -50,7 +56,7 @@ class AdminController extends AbstractController
         $pagination = $paginator->paginate(
             $query ?? $postRepository->findAllExceptDrafts([], true),
             $this->getPage($request),
-            static::PAGINATION_LIMIT_PER_PAGE
+            static::PAGINATION_PUBLICATIONS_LIMIT_PER_PAGE
         );
 
         return $this->render('admin/publications.html.twig', [
@@ -88,5 +94,18 @@ class AdminController extends AbstractController
         $this->postService->declinePost($post);
 
         return $this->redirectToRoute('admin-publications');
+    }
+
+    public function userList(Request $request, UserRepository $userRepository, PaginatorInterface $paginator)
+    {
+        $pagination = $paginator->paginate(
+            $userRepository->findAllQuery(),
+            $this->getPage($request),
+            static::PAGINATION_USER_LIST_LIMIT_PER_PAGE
+        );
+
+        return $this->render('admin/user-list.html.twig', [
+            'pagination' => $pagination
+        ]);
     }
 }

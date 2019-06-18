@@ -22,7 +22,7 @@ class UserController extends AbstractController
         foreach ($users as $user) {
             $userList[] = [
                 'id' => $user->getId(),
-                'text' => $user->getName(),
+                'text' => $user->getEmail(),
             ];
         }
 

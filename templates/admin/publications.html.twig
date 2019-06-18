@@ -74,6 +74,7 @@
                             <td>{{ post.textStatus }}</td>
                             <td>{{ post.status }}</td>
                             <td>
+                                <a href="{{ path('view-template-post', {'post': post.id}) }}">View post template</a>
                                 <a href="{{ path('admin-publish-post', {'post': post.id}) }}">Publish</a>
                                 <a href="{{ path('admin-decline-post', {'post': post.id}) }}">Decline</a>
                             </td>

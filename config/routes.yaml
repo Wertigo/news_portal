@@ -3,7 +3,6 @@ index:
     controller: App\Controller\IndexController::index
 
 # Security
-
 login:
     path: /login
     controller: App\Controller\SecurityController::login
@@ -81,3 +80,7 @@ admin-decline-post:
     path: /admin/post/decline/{post}
     methods: PUT
     controller: App\Controller\AdminController::declinePost
+admin-user-list:
+    path: /admin/user-list
+    methods: GET
+    controller: App\Controller\AdminController::userList

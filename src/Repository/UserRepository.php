@@ -54,6 +54,14 @@ class UserRepository extends ServiceEntityRepository
         ;
     }
 
+    /**
+     * @return \Doctrine\ORM\Query
+     */
+    public function findAllQuery()
+    {
+        return $this->createQueryBuilder('u')->getQuery();
+    }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */
