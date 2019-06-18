@@ -11,11 +11,11 @@ class UserListSearchType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('email', ChoiceType::class, [
+        $builder->add('user', ChoiceType::class, [
             'required' => false,
         ]);
 
-        $builder->get('email')->resetViewTransformers();
+        $builder->get('user')->resetViewTransformers();
     }
 
     public function configureOptions(OptionsResolver $resolver)

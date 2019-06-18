@@ -82,7 +82,7 @@ admin-decline-post:
     controller: App\Controller\AdminController::declinePost
 admin-user-list:
     path: /admin/user-list
-    methods: GET
+    methods: GET|POST
     controller: App\Controller\AdminController::userList
 admin-block-user:
     path: /admin/user/block/{user}

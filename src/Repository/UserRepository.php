@@ -56,7 +56,7 @@ class UserRepository extends ServiceEntityRepository
 
     /**
      * Available indexes for $params array:
-     * email - user email (string)
+     * user - user (int)
      *
      * @param array $params
      * @return \Doctrine\ORM\Query
@@ -65,9 +65,9 @@ class UserRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('u');
 
-        if (isset($params['email'])) {
-            $qb->where('email LIKE %:email%')
-                ->setParameter('email', $params['email'])
+        if (isset($params['user'])) {
+            $qb->where('u.id = :user')
+                ->setParameter('user', $params['user'])
             ;
         }
 

@@ -120,7 +120,6 @@ class AdminController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $params = $form->getData();
-            dd($params);
             $query = $userRepository->findAllQuery($params);
         }
 
