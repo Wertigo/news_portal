@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Post;
 use App\Form\PublicationsFormType;
+use App\Form\UserListSearchType;
 use App\Repository\PostRepository;
 use App\Repository\UserRepository;
 use App\Service\PostService;
@@ -82,7 +83,16 @@ class AdminController extends AbstractController
     {
         $this->postService->publishPost($post);
 
-        return $this->redirectToRoute('admin-publications');
+        return $this->getRedirectToPostTemplatePage($post);
+    }
+
+    /**
+     * @param Post $post
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    private function getRedirectToPostTemplatePage(Post $post)
+    {
+        return $this->redirectToRoute('view-template-post', ['post' => $post->getId()]);
     }
 
     /**
@@ -93,19 +103,36 @@ class AdminController extends AbstractController
     {
         $this->postService->declinePost($post);
 
-        return $this->redirectToRoute('admin-publications');
+        return $this->getRedirectToPostTemplatePage($post);
     }
 
+    /**
+     * @param Request $request
+     * @param UserRepository $userRepository
+     * @param PaginatorInterface $paginator
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function userList(Request $request, UserRepository $userRepository, PaginatorInterface $paginator)
     {
+        $form = $this->createForm(UserListSearchType::class);
+        $form->handleRequest($request);
+        $query = null;
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $params = $form->getData();
+            dd($params);
+            $query = $userRepository->findAllQuery($params);
+        }
+
         $pagination = $paginator->paginate(
-            $userRepository->findAllQuery(),
+            null === $query ? $userRepository->findAllQuery() : $query,
             $this->getPage($request),
             static::PAGINATION_USER_LIST_LIMIT_PER_PAGE
         );
 
         return $this->render('admin/user-list.html.twig', [
-            'pagination' => $pagination
+            'pagination' => $pagination,
+            'form' => $form->createView(),
         ]);
     }
 }

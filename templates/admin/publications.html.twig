@@ -59,6 +59,7 @@
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
+                        <th>id</th>
                         <th>Create data</th>
                         <th>Author</th>
                         <th>Title</th>
@@ -69,14 +70,21 @@
                 <tbody>
                     {% for post in pagination %}
                         <tr>
+                            <td>{{ post.id }}</td>
                             <td>{{ post.createdAt }}</td>
                             <td>{{ post.author.email }}</td>
                             <td>{{ post.textStatus }}</td>
                             <td>{{ post.status }}</td>
                             <td>
                                 <a href="{{ path('view-template-post', {'post': post.id}) }}">View post template</a>
-                                <a href="{{ path('admin-publish-post', {'post': post.id}) }}">Publish</a>
-                                <a href="{{ path('admin-decline-post', {'post': post.id}) }}">Decline</a>
+                                <form action="{{ path('admin-publish-post', {'post': post.id}) }}" method="post">
+                                    <input type="hidden" name="_method" value="put" />
+                                    <input type="submit" value="Publish" class="btn btn-success" />
+                                </form>
+                                <form action="{{ path('admin-decline-post', {'post': post.id}) }}" method="post">
+                                    <input type="hidden" name="_method" value="put" />
+                                    <input type="submit" value="Decline" class="btn btn-danger" />
+                                </form>
                             </td>
                         </tr>
                     {% endfor %}
@@ -101,7 +109,6 @@
             };
 
             // Turn the plain SELECT input into a Select2 element
-
             $('#publications_form_author').select2({
                 placeholder: 'Search for a user',
                 ajax: {

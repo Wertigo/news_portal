@@ -55,39 +55,22 @@ class UserRepository extends ServiceEntityRepository
     }
 
     /**
+     * Available indexes for $params array:
+     * email - user email (string)
+     *
+     * @param array $params
      * @return \Doctrine\ORM\Query
      */
-    public function findAllQuery()
+    public function findAllQuery(array $params = [])
     {
-        return $this->createQueryBuilder('u')->getQuery();
-    }
+        $qb = $this->createQueryBuilder('u');
 
-    // /**
-    //  * @return User[] Returns an array of User objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('u.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        if (isset($params['email'])) {
+            $qb->where('email LIKE %:email%')
+                ->setParameter('email', $params['email'])
+            ;
+        }
 
-    /*
-    public function findOneBySomeField($value): ?User
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        return $qb->getQuery();
     }
-    */
 }

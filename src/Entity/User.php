@@ -41,6 +41,21 @@ class User implements UserInterface
     const STATUS_BLOCKED = 2;
 
     /**
+     * @vat string
+     */
+    const STATUS_TEXT_REGISTERED = 'Registered';
+
+    /**
+     * @vat string
+     */
+    const STATUS_TEXT_ACTIVE = 'Active';
+
+    /**
+     * @vat string
+     */
+    const STATUS_TEXT_BLOCKED = 'Blocked';
+
+    /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -311,5 +326,37 @@ class User implements UserInterface
         }
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTextStatus(): string
+    {
+        switch ($this->getStatus()) {
+            case static::STATUS_REGISTERED :
+                return static::STATUS_TEXT_REGISTERED;
+            case static::STATUS_ACTIVE :
+                return static::STATUS_TEXT_ACTIVE;
+            case static::STATUS_BLOCKED :
+                return static::STATUS_TEXT_BLOCKED;
+            default: return '';
+        }
+    }
+
+    /**
+     * @return bool
+     */
+    public function isActive(): bool
+    {
+        return static::STATUS_ACTIVE === $this->getStatus();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isRegistered(): bool
+    {
+        return static::STATUS_REGISTERED === $this->getStatus();
     }
 }
