@@ -6,7 +6,7 @@ use App\Entity\User;
 use App\Helper\PostHelper;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -29,13 +29,15 @@ class PublicationsFormType extends AbstractType
                 'required' => false,
                 'choices' => PostHelper::getStatuses(true),
             ])
-            ->add('createdFrom', DateType::class, [
+            ->add('createdFrom', DateTimeType::class, [
                 'required' => false,
                 'widget' => 'single_text',
+                'html5' => true,
             ])
-            ->add('createdTo', DateType::class, [
+            ->add('createdTo', DateTimeType::class, [
                 'required' => false,
                 'widget' => 'single_text',
+                'html5' => true,
             ])
         ;
     }

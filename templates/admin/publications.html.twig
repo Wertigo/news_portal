@@ -88,14 +88,19 @@
                         <td>{{ post.status }}</td>
                         <td>
                             <a href="{{ path('view-template-post', {'post': post.id}) }}">View post template</a>
-                            <form action="{{ path('admin-publish-post', {'post': post.id}) }}" method="post">
-                                <input type="hidden" name="_method" value="put" />
-                                <input type="submit" value="Publish" class="btn btn-success" />
-                            </form>
-                            <form action="{{ path('admin-decline-post', {'post': post.id}) }}" method="post">
-                                <input type="hidden" name="_method" value="put" />
-                                <input type="submit" value="Decline" class="btn btn-danger" />
-                            </form>
+
+                            {% if post.isPostPublished %}
+                                <form action="{{ path('admin-decline-post', {'post': post.id}) }}" method="post">
+                                    <input type="hidden" name="_method" value="put" />
+                                    <input type="submit" value="Decline" class="btn btn-danger" />
+                                </form>
+                            {% else %}
+                                <form action="{{ path('admin-publish-post', {'post': post.id}) }}" method="post">
+                                    <input type="hidden" name="_method" value="put" />
+                                    <input type="submit" value="Publish" class="btn btn-success" />
+                                </form>
+                            {% endif %}
+
                         </td>
                     </tr>
                 {% endfor %}

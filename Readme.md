@@ -29,6 +29,11 @@
     ```bash
     yarn install
     ```
+8. Build frontend:
+    ```bash
+    yarn encore {env}
+    ```
+    where env: dev|test|prod
 N. Load fixtures (if needed):
     ```bash
     php bin/console doctrine:fixtures:load

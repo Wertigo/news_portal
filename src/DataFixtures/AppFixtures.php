@@ -258,7 +258,7 @@ EOF
         $post = $this->createRandomPost();
         $post->setTitle('Keanu reeves cyberpunk 2077')
             ->setContent(<<<EOF
-img src="https://cv1.pikabu.ru/video/2019/06/10/1560127041252210064_460x258.jpg" />
+<img src="https://cv1.pikabu.ru/video/2019/06/10/1560127041252210064_460x258.jpg" />
 <p>Чувство от нахождения там, от хождения по улицам будущего, от этого будет реально захватывать дух (breathtaking - захватывает дух / потрясающий ) !</p>
 <p>крик из толпы: Это ты потрясающий !</p>
 <p>Это ты потрясающий !</p>
