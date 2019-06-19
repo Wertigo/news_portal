@@ -73,4 +73,18 @@ class UserRepository extends ServiceEntityRepository
 
         return $qb->getQuery();
     }
+
+    /**
+     * @param string $email
+     * @return mixed
+     */
+    public function findBySimilarEmail($email)
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.email LIKE :email')
+            ->setParameter('email', "$email%")
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

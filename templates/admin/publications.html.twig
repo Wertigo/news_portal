@@ -11,7 +11,19 @@
             <form action="{{ path('admin-publications') }}" class="form-horizontal">
                 <div class="form-group">
                     <label>Author</label>
-                    {{ form_widget(form.author, {'attr': {'class': 'form-control'}}) }}
+                    <div class="ajax-search-collection">
+                        <div class="search-container">
+                            <input type="text"
+                                   class="search-input form-control"
+                                   placeholder="Search ..."
+                                   data-search-url="{{ path('api-search-user-by-email') }}"
+                                   data-multiple="false"
+                            />
+                            <div class="search-results"></div>
+                        </div>
+                        <div class="selected-list"></div>
+                        {{ form_widget(form.author) }}
+                    </div>
 
                     {% if form.author.vars.valid != true %}
                         <div class="alert alert-danger">

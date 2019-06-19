@@ -54,10 +54,10 @@ api-search-tags:
     path: /api/tag/search
     methods: POST
     controller: App\Controller\Api\TagController::search
-api-get-all-users:
-    path: /api/user
-    methods: GET
-    controller: App\Controller\Api\UserController::index
+api-search-user-by-email:
+    path: /api/user/search-by-email
+    methods: POST
+    controller: App\Controller\Api\UserController::searchByEmail
 api-post-rating-up:
     path: /api/post/rating-up/{post}
     methods: POST

@@ -83,7 +83,7 @@ class PostRepository extends ServiceEntityRepository
     {
         $builder = $this->createQueryBuilder('p')
             ->where('p.status <> :status')
-            ->setParameter('status', Post::STATUS_PUBLISHED)
+            ->setParameter('status', Post::STATUS_DRAFT)
             ->orderBy('p.created_at', 'ASC')
         ;
 

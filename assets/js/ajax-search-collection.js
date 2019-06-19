@@ -7,6 +7,7 @@ module.exports = function ($) {
     const $searchContainer = $module.find('.search-container');
     const $searchResults = $module.find('.search-results');
     const $selectedItemList = $module.find('.selected-list');
+    let multiple = $searchInput.data('multiple');
 
     let autoCompleteList = [];
     let searchInProgress = false;
@@ -22,7 +23,7 @@ module.exports = function ($) {
         for (let i = 0; i < items.length; i++) {
             autoCompleteList.push({
                 id: items[i].id,
-                text: items[i].name,
+                text: items[i].text,
             });
         }
     };
@@ -32,7 +33,11 @@ module.exports = function ($) {
         const values = [];
 
         for (let i = 0; i < $options.length; i++) {
-            values.push($($options[i]).val());
+            const value = $($options[i]).val();
+
+            if (value !== '') {
+                values.push();
+            }
         }
 
         return values;
@@ -58,9 +63,12 @@ module.exports = function ($) {
         for (let i = 0; i < selectObjects.length; i++) {
             const item = selectObjects[i];
             $selectedItemList.find('.selected-items').remove();
-            $selectedItemList.append(
-                $('<div class="selected-item label label-success" data-id="' + item.id + '"><span class="remove-item">X</span>' + item.text + '</div>')
-            );
+
+            if (item.id !== '' && item.text !== '') {
+                $selectedItemList.append(
+                    $('<div class="selected-item label label-success" data-id="' + item.id + '"><span class="remove-item">X</span>' + item.text + '</div>')
+                );
+            }
         }
 
     };
@@ -89,8 +97,21 @@ module.exports = function ($) {
     };
 
     const addNewSelectedItem = function (item) {
+        if (!multiple) {
+            $selectedItemList.find('.selected-item').remove();
+            $select.val(item.id);
+            $selectedItemList.append(
+                $('<div class="selected-item label label-success" data-id="' + item.id + '">' +
+                    '<span class="remove-item">X</span>' + item.text +
+                    '</div>')
+            );
+
+            return;
+        }
+
         const selectedValues = getSelectedValues();
 
+        // if already in list - skip
         for (let i = 0; i < selectedValues.length; i++) {
             if (item.id == selectedValues[i]) {
                 return;
@@ -103,9 +124,6 @@ module.exports = function ($) {
         selectedObjects.push(item);
 
         $select.val(selectedValues);
-        console.log("New selected values");
-        console.log(selectedValues);
-
         $selectedItemList.append(
             $('<div class="selected-item label label-success" data-id="' + item.id + '">' +
                 '<span class="remove-item">X</span>' + item.text +
@@ -127,6 +145,10 @@ module.exports = function ($) {
     };
 
     // APP
+    if (multiple === undefined || multiple === null) {
+        multiple = true;
+    }
+
     renderItems();
 
     $searchInput.keyup(function (e) {

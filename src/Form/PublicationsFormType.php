@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\User;
 use App\Helper\PostHelper;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -14,8 +16,14 @@ class PublicationsFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('author', ChoiceType::class, [
+            ->add('author', EntityType::class, [
                 'required' => false,
+                'class' => User::class,
+                'choice_label' => 'email',
+                'multiple' => false,
+                'attr' => [
+                    'class' => 'form-control collection-container',
+                ],
             ])
             ->add('status', ChoiceType::class, [
                 'required' => false,

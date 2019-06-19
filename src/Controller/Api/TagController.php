@@ -18,18 +18,19 @@ class TagController extends AbstractController
     {
         $searchName = $request->request->get('search', null);
 
-
-
         if (null === $searchName) {
             return new JsonResponse([]);
         }
 
         $tags = $tagRepository->findBySimilarName($searchName);
-        $serializer = $this->container->get('serializer');
         $serializedTags = [];
 
+        /** @var \App\Entity\Tag $tag */
         foreach ($tags as $tag) {
-            $serializedTags[] = ['id' => $tag->getId(), 'name' => $tag->getName()];
+            $serializedTags[] = [
+                'id' => $tag->getId(),
+                'text' => $tag->getName(),
+            ];
         }
 
         return new JsonResponse(['items' => $serializedTags]);

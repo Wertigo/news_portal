@@ -7,14 +7,14 @@ use App\Entity\Post;
 class PostHelper
 {
     /**
-     * @param bool $exceptPublished
+     * @param bool $exceptDrafts
      * @return array
      */
-    public static function getStatuses($exceptPublished = false)
+    public static function getStatuses($exceptDrafts = false)
     {
-        if ($exceptPublished) {
+        if ($exceptDrafts) {
             return [
-                Post::STATUS_TEXT_DRAFT => Post::STATUS_DRAFT,
+                Post::STATUS_TEXT_PUBLISHED => Post::STATUS_PUBLISHED,
                 Post::STATUS_TEXT_MODERATION_CHECK => Post::STATUS_MODERATION_CHECK,
                 Post::STATUS_TEXT_DECLINED => Post::STATUS_DECLINED,
             ];
