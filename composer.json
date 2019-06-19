@@ -71,6 +71,7 @@
         "doctrine/doctrine-fixtures-bundle": "^3.2",
         "friendsofphp/php-cs-fixer": "^2.15",
         "symfony/maker-bundle": "^1.11",
+        "symfony/phpunit-bridge": "^4.3",
         "symfony/profiler-pack": "^1.0"
     }
 }

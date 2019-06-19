@@ -62,3 +62,8 @@
     ```
     userId - id пользователя
 
+### Tests
+1. Run
+    ```bash
+    php bin/phpunit
+    ```
