@@ -132,6 +132,7 @@ class User implements UserInterface
 
     /**
      * @param string $email
+     *
      * @return User
      */
     public function setEmail(string $email): self
@@ -164,6 +165,7 @@ class User implements UserInterface
 
     /**
      * @param array $roles
+     *
      * @return User
      */
     public function setRoles(array $roles): self
@@ -183,6 +185,7 @@ class User implements UserInterface
 
     /**
      * @param string $password
+     *
      * @return User
      */
     public function setPassword(string $password): self
@@ -219,6 +222,7 @@ class User implements UserInterface
 
     /**
      * @param string $name
+     *
      * @return User
      */
     public function setName(string $name): self
@@ -238,6 +242,7 @@ class User implements UserInterface
 
     /**
      * @param int $status
+     *
      * @return User
      */
     public function setStatus(int $status): self
@@ -257,6 +262,7 @@ class User implements UserInterface
 
     /**
      * @param mixed $activateToken
+     *
      * @return User
      */
     public function setActivateToken($activateToken): User
@@ -334,11 +340,11 @@ class User implements UserInterface
     public function getTextStatus(): string
     {
         switch ($this->getStatus()) {
-            case static::STATUS_REGISTERED :
+            case static::STATUS_REGISTERED:
                 return static::STATUS_TEXT_REGISTERED;
-            case static::STATUS_ACTIVE :
+            case static::STATUS_ACTIVE:
                 return static::STATUS_TEXT_ACTIVE;
-            case static::STATUS_BLOCKED :
+            case static::STATUS_BLOCKED:
                 return static::STATUS_TEXT_BLOCKED;
             default: return '';
         }

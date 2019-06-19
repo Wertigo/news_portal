@@ -8,11 +8,12 @@ class UserFactory
 {
     /**
      * @return User
+     *
      * @throws \Exception
      */
     public function createNew(): User
     {
-        return (new User)
+        return (new User())
             ->setRoles([User::ROLE_USER])
             ->setStatus(User::STATUS_REGISTERED)
             ->setActivateToken($this->generateRandomString())
@@ -21,6 +22,7 @@ class UserFactory
 
     /**
      * @return string
+     *
      * @throws \Exception
      */
     private function generateRandomString()

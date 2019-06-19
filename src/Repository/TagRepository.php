@@ -16,6 +16,7 @@ class TagRepository extends ServiceEntityRepository
 {
     /**
      * TagRepository constructor.
+     *
      * @param RegistryInterface $registry
      */
     public function __construct(RegistryInterface $registry)
@@ -25,6 +26,7 @@ class TagRepository extends ServiceEntityRepository
 
     /**
      * @param string $name
+     *
      * @return mixed
      */
     public function findBySimilarName($name)

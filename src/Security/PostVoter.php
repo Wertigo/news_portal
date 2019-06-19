@@ -16,7 +16,8 @@ class PostVoter extends Voter
 
     /**
      * @param string $attribute
-     * @param mixed $subject
+     * @param mixed  $subject
+     *
      * @return bool
      */
     protected function supports($attribute, $subject)
@@ -33,10 +34,12 @@ class PostVoter extends Voter
     }
 
     /**
-     * @param string $attribute
-     * @param mixed $subject
+     * @param string         $attribute
+     * @param mixed          $subject
      * @param TokenInterface $token
+     *
      * @return bool
+     *
      * @throws \Exception
      */
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
@@ -59,6 +62,7 @@ class PostVoter extends Voter
     /**
      * @param Post $post
      * @param User $user
+     *
      * @return bool
      */
     private function canUpdate(Post $post, User $user): bool

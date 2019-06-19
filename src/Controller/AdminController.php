@@ -31,6 +31,7 @@ class AdminController extends AbstractController
 
     /**
      * AdminController constructor.
+     *
      * @param PostService $postService
      */
     public function __construct(PostService $postService)
@@ -39,9 +40,10 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param Request            $request
      * @param PaginatorInterface $paginator
-     * @param PostRepository $postRepository
+     * @param PostRepository     $postRepository
+     *
      * @return mixed
      */
     public function publications(Request $request, PaginatorInterface $paginator, PostRepository $postRepository)
@@ -68,6 +70,7 @@ class AdminController extends AbstractController
 
     /**
      * @param Request $request
+     *
      * @return int
      */
     private function getPage(Request $request)
@@ -77,6 +80,7 @@ class AdminController extends AbstractController
 
     /**
      * @param Post $post
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function publishPost(Post $post)
@@ -88,6 +92,7 @@ class AdminController extends AbstractController
 
     /**
      * @param Post $post
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     private function getRedirectToPostTemplatePage(Post $post)
@@ -97,6 +102,7 @@ class AdminController extends AbstractController
 
     /**
      * @param Post $post
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function declinePost(Post $post)
@@ -107,9 +113,10 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param UserRepository $userRepository
+     * @param Request            $request
+     * @param UserRepository     $userRepository
      * @param PaginatorInterface $paginator
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function userList(Request $request, UserRepository $userRepository, PaginatorInterface $paginator)

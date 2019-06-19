@@ -33,9 +33,10 @@ class EmailSender
 
     /**
      * EmailSender constructor.
-     * @param SwiftMailer $mailer
-     * @param Environment $twig
-     * @param LoggerInterface $logger
+     *
+     * @param SwiftMailer           $mailer
+     * @param Environment           $twig
+     * @param LoggerInterface       $logger
      * @param ParameterBagInterface $parameterBag
      */
     public function __construct(
@@ -52,6 +53,7 @@ class EmailSender
 
     /**
      * @param User $user
+     *
      * @return bool
      */
     public function sendRegistrationCompleteEmail(User $user): bool
@@ -71,7 +73,8 @@ class EmailSender
      * @param string $receiver
      * @param string $sender
      * @param string $template
-     * @param array $params
+     * @param array  $params
+     *
      * @return bool
      */
     private function sendEmail($subject, $receiver, $sender, $template, $params): bool
@@ -93,6 +96,7 @@ class EmailSender
 
     /**
      * @param User $user
+     *
      * @return bool
      */
     public function sendActivationCompleteEmail(User $user): bool

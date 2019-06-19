@@ -80,8 +80,7 @@ class AppFixtures extends Fixture
     /**
      * @var string
      */
-    const DEFAULT_PASSWORD = "1234";
-
+    const DEFAULT_PASSWORD = '1234';
 
     public function __construct(
         UserFactory $userFactory,
@@ -105,6 +104,7 @@ class AppFixtures extends Fixture
 
     /**
      * @param ObjectManager $manager
+     *
      * @throws \Exception
      */
     public function load(ObjectManager $manager)
@@ -118,12 +118,13 @@ class AppFixtures extends Fixture
     }
 
     /**
-     * Create test users
+     * Create test users.
+     *
      * @throws \Exception
      */
     private function createUsers(): void
     {
-        for ($i = 20; $i < 40; $i++) {
+        for ($i = 20; $i < 40; ++$i) {
             $user = $this->userFactory->createNew();
             $user->setName("user_$i")
                 ->setPassword(
@@ -132,11 +133,11 @@ class AppFixtures extends Fixture
                 ->setEmail("email$i@gmail.com")
             ;
 
-            if ($i % 6 === 0) {
+            if (0 === $i % 6) {
                 $user->setStatus(User::STATUS_BLOCKED);
             }
 
-            if ($i % 2 === 0) {
+            if (0 === $i % 2) {
                 $user->setStatus(User::STATUS_ACTIVE);
             }
 
@@ -147,7 +148,7 @@ class AppFixtures extends Fixture
     }
 
     /**
-     * Create test tags
+     * Create test tags.
      */
     private function createTags(): void
     {
@@ -318,6 +319,7 @@ EOF
 
     /**
      * @return Post
+     *
      * @throws \Exception
      */
     private function createRandomPost()
@@ -334,6 +336,7 @@ EOF
 
     /**
      * @return User|null
+     *
      * @throws \Exception
      */
     private function getRandomAuthor(): ?User
@@ -361,7 +364,7 @@ EOF
         while (true) {
             $tag = $this->getRandomTag();
 
-            if ($tag === null) {
+            if (null === $tag) {
                 break;
             }
 
@@ -399,6 +402,7 @@ EOF
 
     /**
      * @return int
+     *
      * @throws \Exception
      */
     private function getRandomRating()
@@ -425,6 +429,7 @@ EOF
 
     /**
      * @return mixed
+     *
      * @throws \Exception
      */
     private function getRandomPublishedPost()
@@ -447,7 +452,7 @@ EOF
      */
     public function createComments()
     {
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 10; ++$i) {
             $comment = $this->commentFactory->createNew();
             $comment->setAuthor($this->getRandomAuthor())
                 ->setPost($this->getRandomPublishedPost())

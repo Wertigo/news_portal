@@ -10,6 +10,7 @@ class IndexController extends AbstractController
 {
     /**
      * @param PostRepository $postRepository
+     *
      * @return Response
      */
     public function index(PostRepository $postRepository)

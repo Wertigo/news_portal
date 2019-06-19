@@ -17,6 +17,7 @@ class UserRepository extends ServiceEntityRepository
 {
     /**
      * UserRepository constructor.
+     *
      * @param RegistryInterface $registry
      */
     public function __construct(RegistryInterface $registry)
@@ -26,7 +27,9 @@ class UserRepository extends ServiceEntityRepository
 
     /**
      * @param string $email
+     *
      * @return User|null
+     *
      * @throws NonUniqueResultException
      */
     public function findActivatedUserByEmail($email): ?User
@@ -56,9 +59,10 @@ class UserRepository extends ServiceEntityRepository
 
     /**
      * Available indexes for $params array:
-     * user - user (int)
+     * user - user (int).
      *
      * @param array $params
+     *
      * @return \Doctrine\ORM\Query
      */
     public function findAllQuery(array $params = [])
@@ -76,6 +80,7 @@ class UserRepository extends ServiceEntityRepository
 
     /**
      * @param string $email
+     *
      * @return mixed
      */
     public function findBySimilarEmail($email)

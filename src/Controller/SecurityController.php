@@ -10,6 +10,7 @@ class SecurityController extends AbstractController
 {
     /**
      * @param AuthenticationUtils $authenticationUtils
+     *
      * @return Response
      */
     public function login(AuthenticationUtils $authenticationUtils): Response

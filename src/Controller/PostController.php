@@ -28,6 +28,7 @@ class PostController extends AbstractController
 
     /**
      * PostController constructor.
+     *
      * @param ObjectManager $entityManager
      * @param TagRepository $tagRepository
      */
@@ -38,8 +39,9 @@ class PostController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param Request     $request
      * @param PostFactory $postFactory
+     *
      * @return mixed
      */
     public function createPost(Request $request, PostFactory $postFactory, TagFactory $tagFactory)
@@ -79,6 +81,7 @@ class PostController extends AbstractController
 
     /**
      * @param Post $post
+     *
      * @return Response
      */
     public function view(Post $post): Response
@@ -94,6 +97,7 @@ class PostController extends AbstractController
 
     /**
      * @param Post $post
+     *
      * @return Response
      */
     public function viewTemplate(Post $post): Response
@@ -105,7 +109,8 @@ class PostController extends AbstractController
 
     /**
      * @param Request $request
-     * @param Post $post
+     * @param Post    $post
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function update(Request $request, Post $post)
@@ -130,9 +135,10 @@ class PostController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param Post $post
+     * @param Request     $request
+     * @param Post        $post
      * @param PostService $postService
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function moderatePost(Request $request, Post $post, PostService $postService, LoggerInterface $logger)

@@ -53,7 +53,6 @@ class Post
      */
     const STATUS_TEXT_DECLINED = 'Declined';
 
-
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -141,6 +140,7 @@ class Post
 
     /**
      * @param int $status
+     *
      * @return Post
      */
     public function setStatus(int $status): self
@@ -160,6 +160,7 @@ class Post
 
     /**
      * @param string $title
+     *
      * @return Post
      */
     public function setTitle(string $title): self
@@ -179,6 +180,7 @@ class Post
 
     /**
      * @param string $content
+     *
      * @return Post
      */
     public function setContent(string $content): self
@@ -198,6 +200,7 @@ class Post
 
     /**
      * @param int $rating
+     *
      * @return Post
      */
     public function setRating(int $rating): self
@@ -217,6 +220,7 @@ class Post
 
     /**
      * @param User|null $author
+     *
      * @return Post
      */
     public function setAuthor(?User $author): self
@@ -261,6 +265,7 @@ class Post
 
     /**
      * @param bool $asString
+     *
      * @return mixed
      */
     public function getCreatedAt($asString = true)
@@ -281,6 +286,7 @@ class Post
 
     /**
      * @param bool $asString
+     *
      * @return mixed
      */
     public function getUpdatedAt($asString = true)
@@ -307,7 +313,7 @@ class Post
     {
         $this->setUpdatedAt(new DateTime('now'));
 
-        if ($this->getCreatedAt() === null) {
+        if (null === $this->getCreatedAt()) {
             $this->setCreatedAt(new DateTime('now'));
         }
     }
@@ -341,7 +347,7 @@ class Post
      */
     public function getShortContent()
     {
-        return substr(strip_tags($this->getContent()), 0, 300) . ' ...';
+        return substr(strip_tags($this->getContent()), 0, 300).' ...';
     }
 
     /**
@@ -381,13 +387,13 @@ class Post
     public function getTextStatus(): string
     {
         switch ($this->getStatus()) {
-            case static::STATUS_DRAFT :
+            case static::STATUS_DRAFT:
                 return static::STATUS_TEXT_DRAFT;
-            case static::STATUS_MODERATION_CHECK :
+            case static::STATUS_MODERATION_CHECK:
                 return static::STATUS_TEXT_MODERATION_CHECK;
-            case static::STATUS_PUBLISHED :
+            case static::STATUS_PUBLISHED:
                 return static::STATUS_TEXT_PUBLISHED;
-            case static::STATUS_DECLINED :
+            case static::STATUS_DECLINED:
                 return static::STATUS_TEXT_DECLINED;
             default:
                 return '';

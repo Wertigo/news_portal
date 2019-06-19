@@ -8,6 +8,7 @@ class PostHelper
 {
     /**
      * @param bool $exceptDrafts
+     *
      * @return array
      */
     public static function getStatuses($exceptDrafts = false)

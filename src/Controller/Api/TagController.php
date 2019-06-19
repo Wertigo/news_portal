@@ -10,8 +10,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class TagController extends AbstractController
 {
     /**
-     * @param Request $request
+     * @param Request       $request
      * @param TagRepository $tagRepository
+     *
      * @return JsonResponse
      */
     public function search(Request $request, TagRepository $tagRepository)

@@ -12,16 +12,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Form\FormInterface;
 
 class RegistrationController extends AbstractController
 {
     /**
-     * @param Request $request
+     * @param Request                      $request
      * @param UserPasswordEncoderInterface $passwordEncoder
-     * @param UserFactory $userFactory
-     * @param EmailSender $emailSender
+     * @param UserFactory                  $userFactory
+     * @param EmailSender                  $emailSender
+     *
      * @return Response
+     *
      * @throws \Exception
      */
     public function register(
@@ -29,8 +30,7 @@ class RegistrationController extends AbstractController
         UserPasswordEncoderInterface $passwordEncoder,
         UserFactory $userFactory,
         EmailSender $emailSender
-    ): Response
-    {
+    ): Response {
         $user = $userFactory->createNew();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
@@ -63,11 +63,12 @@ class RegistrationController extends AbstractController
     }
 
     /**
-     * @param string $token
-     * @param UserRepository $userRepository
-     * @param UserService $userService
-     * @param EmailSender $emailSender
+     * @param string          $token
+     * @param UserRepository  $userRepository
+     * @param UserService     $userService
+     * @param EmailSender     $emailSender
      * @param LoggerInterface $logger
+     *
      * @return Response
      */
     public function activateAccount(

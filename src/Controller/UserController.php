@@ -17,6 +17,7 @@ class UserController extends AbstractController
 
     /**
      * UserController constructor.
+     *
      * @param UserService $userService
      */
     public function __construct(UserService $userService)
@@ -38,8 +39,9 @@ class UserController extends AbstractController
     }
 
     /**
-     * @param User $author
+     * @param User           $author
      * @param PostRepository $postRepository
+     *
      * @return Response
      */
     public function authorView(User $author, PostRepository $postRepository)

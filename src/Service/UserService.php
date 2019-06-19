@@ -20,8 +20,9 @@ class UserService
 
     /**
      * UserService constructor.
+     *
      * @param EntityManagerInterface $entityManager
-     * @param LoggerInterface $logger
+     * @param LoggerInterface        $logger
      */
     public function __construct(EntityManagerInterface $entityManager, LoggerInterface $logger)
     {
@@ -31,6 +32,7 @@ class UserService
 
     /**
      * @param User $user
+     *
      * @return bool
      */
     public function activateAccount(User $user): bool
@@ -50,6 +52,7 @@ class UserService
 
     /**
      * @param User $user
+     *
      * @return float
      */
     public function calculateRating(User $user): float

@@ -17,6 +17,7 @@ class PostRepository extends ServiceEntityRepository
 {
     /**
      * PostRepository constructor.
+     *
      * @param RegistryInterface $registry
      */
     public function __construct(RegistryInterface $registry)
@@ -40,6 +41,7 @@ class PostRepository extends ServiceEntityRepository
 
     /**
      * @param User $user
+     *
      * @return mixed
      */
     public function findPublishedPostsByAuthor(User $author)
@@ -72,11 +74,12 @@ class PostRepository extends ServiceEntityRepository
      * author - user id (int)
      * status - post status (int)
      * createdFrom = datetime: yyyy-mm-dd (string)
-     * createdTo = datetime: yyyy-mm-dd (string)
+     * createdTo = datetime: yyyy-mm-dd (string).
      *
      *
      * @param array $params
-     * @param bool $asQuery
+     * @param bool  $asQuery
+     *
      * @return \Doctrine\ORM\Query|mixed
      */
     public function findAllExceptDrafts(array $params = [], $asQuery = false)

@@ -19,6 +19,7 @@ class PostService
 
     /**
      * @param Post $post
+     *
      * @throws \Exception
      */
     public function sendPostToModerate(Post $post): void
@@ -34,6 +35,7 @@ class PostService
 
     /**
      * @param Post $post
+     *
      * @return bool
      */
     public function publishPost(Post $post): bool
@@ -51,6 +53,7 @@ class PostService
 
     /**
      * @param Post $post
+     *
      * @return bool
      */
     public function declinePost(Post $post): bool

@@ -11,8 +11,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class UserController extends AbstractController
 {
     /**
-     * @param Request $request
+     * @param Request        $request
      * @param UserRepository $userRepository
+     *
      * @return JsonResponse
      */
     public function searchByEmail(Request $request, UserRepository $userRepository): JsonResponse

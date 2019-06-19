@@ -16,6 +16,7 @@ class PostController extends AbstractController
 
     /**
      * PostController constructor.
+     *
      * @param ObjectManager $manager
      */
     public function __construct(ObjectManager $manager)
@@ -25,6 +26,7 @@ class PostController extends AbstractController
 
     /**
      * @param Post $post
+     *
      * @return JsonResponse
      */
     public function ratingUp(Post $post): JsonResponse
@@ -38,6 +40,7 @@ class PostController extends AbstractController
 
     /**
      * @param Post $post
+     *
      * @return JsonResponse
      */
     public function ratingDown(Post $post): JsonResponse
