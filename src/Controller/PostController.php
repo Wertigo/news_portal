@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Post;
 use App\Factory\PostFactory;
+use App\Factory\TagFactory;
 use App\Form\PostFormType;
 use App\Repository\TagRepository;
 use App\Service\PostService;
@@ -41,7 +42,7 @@ class PostController extends AbstractController
      * @param PostFactory $postFactory
      * @return mixed
      */
-    public function createPost(Request $request, PostFactory $postFactory)
+    public function createPost(Request $request, PostFactory $postFactory, TagFactory $tagFactory)
     {
         $post = $postFactory->createNew();
         $form = $this->createForm(PostFormType::class, $post);

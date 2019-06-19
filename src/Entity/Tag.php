@@ -36,6 +36,13 @@ class Tag
         $this->posts = new ArrayCollection();
     }
 
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
     /**
      * @return int|null
      */
@@ -89,12 +96,5 @@ class Tag
         }
 
         return $this;
-    }
-
-    public function jsonSerialize()
-    {
-        return [
-            'id' => $this->id,
-        ];
     }
 }

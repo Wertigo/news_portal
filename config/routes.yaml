@@ -50,10 +50,10 @@ send-post-to-moderation:
     controller: App\Controller\PostController::moderatePost
 
 # Api
-api-get-all-tags:
-    path: /api/tag
-    methods: GET
-    controller: App\Controller\Api\TagController::index
+api-search-tags:
+    path: /api/tag/search
+    methods: POST
+    controller: App\Controller\Api\TagController::search
 api-get-all-users:
     path: /api/user
     methods: GET

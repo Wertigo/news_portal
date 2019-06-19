@@ -111,10 +111,10 @@ class AppFixtures extends Fixture
     {
         $this->manager = $manager;
 
-        $this->createUsers();
+        //$this->createUsers();
         $this->createTags();
-        $this->createPosts();
-        $this->createComments();
+        //$this->createPosts();
+        //$this->createComments();
     }
 
     /**
@@ -172,11 +172,35 @@ class AppFixtures extends Fixture
         $this->manager->persist($tag);
 
         $tag = $this->tagFactory->createNew();
+        $tag->setName('GO1');
+        $this->manager->persist($tag);
+
+        $tag = $this->tagFactory->createNew();
+        $tag->setName('GO2');
+        $this->manager->persist($tag);
+
+        $tag = $this->tagFactory->createNew();
         $tag->setName('PYTHON');
         $this->manager->persist($tag);
 
         $tag = $this->tagFactory->createNew();
+        $tag->setName('PYTHON-SIMILAR-1');
+        $this->manager->persist($tag);
+
+        $tag = $this->tagFactory->createNew();
+        $tag->setName('PYTHON-SIMILAR-2');
+        $this->manager->persist($tag);
+
+        $tag = $this->tagFactory->createNew();
+        $tag->setName('PYTHON-SIMILAR-3');
+        $this->manager->persist($tag);
+
+        $tag = $this->tagFactory->createNew();
         $tag->setName('JAVA');
+        $this->manager->persist($tag);
+
+        $tag = $this->tagFactory->createNew();
+        $tag->setName('JAVA-SIMILAR-1');
         $this->manager->persist($tag);
 
         $this->manager->flush();

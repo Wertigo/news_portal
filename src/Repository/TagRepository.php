@@ -22,4 +22,19 @@ class TagRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Tag::class);
     }
+
+    /**
+     * @param string $name
+     * @return mixed
+     */
+    public function findBySimilarName($name)
+    {
+        return $this->createQueryBuilder('t')
+            ->where('t.name LIKE :name')
+            ->setParameter('name', "%$name%")
+            ->orderBy('t.name', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

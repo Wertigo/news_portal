@@ -21,11 +21,20 @@
 <div class="form-group">
     <label class="control-label">Tags</label>
 
-    {{ form_widget(form.post_tags, {'attr': { 'class': 'form-control'}}) }}
+    <div class="ajax-search-collection">
+        <input type="text"
+               class="search-input form-control"
+               placeholder="Search ..."
+               data-search-url="{{ path('api-search-tags') }}"
+        />
+        <div class="search-results"></div>
+        <div class="list"></div>
+        {{ form_widget(form.tags) }}
+    </div>
 
-    {% if form.post_tags.vars.valid != true %}
+    {% if form.tags.vars.valid != true %}
         <div class="alert alert-danger">
-            {{ form_errors(form.post_tags) }}
+            {{ form_errors(form.tags) }}
         </div>
     {% endif %}
 </div>
