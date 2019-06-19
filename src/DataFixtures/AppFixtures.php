@@ -111,10 +111,10 @@ class AppFixtures extends Fixture
     {
         $this->manager = $manager;
 
-        //$this->createUsers();
+        $this->createUsers();
         $this->createTags();
-        //$this->createPosts();
-        //$this->createComments();
+        $this->createPosts();
+        $this->createComments();
     }
 
     /**

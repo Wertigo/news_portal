@@ -22,13 +22,15 @@
     <label class="control-label">Tags</label>
 
     <div class="ajax-search-collection">
-        <input type="text"
-               class="search-input form-control"
-               placeholder="Search ..."
-               data-search-url="{{ path('api-search-tags') }}"
-        />
-        <div class="search-results"></div>
-        <div class="list"></div>
+        <div class="search-container">
+            <input type="text"
+                   class="search-input form-control"
+                   placeholder="Search ..."
+                   data-search-url="{{ path('api-search-tags') }}"
+            />
+            <div class="search-results"></div>
+        </div>
+        <div class="selected-list"></div>
         {{ form_widget(form.tags) }}
     </div>
 

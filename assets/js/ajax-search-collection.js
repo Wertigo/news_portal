@@ -4,14 +4,15 @@ module.exports = function ($) {
     const MINIMAL_SEARCH_WORD_LENGTH = 2;
     const $searchInput = $module.find('.search-input');
     const $select = $module.find('.collection-container');
+    const $searchContainer = $module.find('.search-container');
     const $searchResults = $module.find('.search-results');
+    const $selectedItemList = $module.find('.selected-list');
 
     let autoCompleteList = [];
     let searchInProgress = false;
 
     // FUNCTIONS
     const setFoundedItems = function (items) {
-        console.log(items);
         if (items.length === 0) {
             return;
         }
@@ -24,8 +25,6 @@ module.exports = function ($) {
                 text: items[i].name,
             });
         }
-
-        console.log(autoCompleteList);
     };
 
     const getSelectedValues = function () {
@@ -53,13 +52,17 @@ module.exports = function ($) {
         return values;
     };
 
-    const updateView = function (items) {
-        // render tags
-        renderItems();
-    };
-
     const renderItems = function () {
-        console.log(getSelectedObjects());
+        const selectObjects = getSelectedObjects();
+
+        for (let i = 0; i < selectObjects.length; i++) {
+            const item = selectObjects[i];
+            $selectedItemList.find('.selected-items').remove();
+            $selectedItemList.append(
+                $('<div class="selected-item label label-success" data-id="' + item.id + '"><span class="remove-item">X</span>' + item.text + '</div>')
+            );
+        }
+
     };
 
     const handleAjaxResponse = function (response) {
@@ -69,21 +72,63 @@ module.exports = function ($) {
     };
 
     const renderAutocompleteList = function () {
-        // TODO: implement
+        $searchResults.addClass('active');
+        $searchResults.find('.autocomplete-item').remove();
+
         for (let i = 0; i < autoCompleteList.length; i++) {
             const item = autoCompleteList[i];
             $searchResults.find('.item').remove();
             $searchResults.append(
-                $('<label class="label label-success" data-item-id="' + item.id + '">' + item.text + '</label>')
+                $('<div class="autocomplete-item" data-id="' + item.id + '">' + item.text + '</div>')
             );
         }
     };
 
     const hideAutocompleteList = function () {
-        // TODO: implement
+        $searchResults.removeClass('active');
+    };
+
+    const addNewSelectedItem = function (item) {
+        const selectedValues = getSelectedValues();
+
+        for (let i = 0; i < selectedValues.length; i++) {
+            if (item.id == selectedValues[i]) {
+                return;
+            }
+        }
+
+        selectedValues.push(item.id);
+
+        const selectedObjects = getSelectedObjects();
+        selectedObjects.push(item);
+
+        $select.val(selectedValues);
+        console.log("New selected values");
+        console.log(selectedValues);
+
+        $selectedItemList.append(
+            $('<div class="selected-item label label-success" data-id="' + item.id + '">' +
+                '<span class="remove-item">X</span>' + item.text +
+            '</div>')
+        );
+    };
+
+    const removeItem = function ($item) {
+        const id = $item.data('id');
+        $item.remove();
+
+        let selectedValues = getSelectedValues();
+
+        selectedValues = selectedValues.filter(function (value, index, arr) {
+            return value != id;
+        });
+
+        $select.val(selectedValues);
     };
 
     // APP
+    renderItems();
+
     $searchInput.keyup(function (e) {
         if (searchInProgress) {
             return;
@@ -106,11 +151,32 @@ module.exports = function ($) {
         });
     });
 
-    $searchInput.focus(function (e) {
+    $searchContainer.focus(function () {
         renderAutocompleteList();
     });
 
-    $searchInput.focusout(function (e) {
+    $searchContainer.on('click', '.autocomplete-item', function () {
         hideAutocompleteList();
+        const $item = $(this);
+
+        addNewSelectedItem({id: $item.data('id'), text: $item.text()});
+    });
+
+    $searchInput.on('focus', function () {
+        renderAutocompleteList();
+    });
+
+    $selectedItemList.on('click', '.remove-item', function () {
+        const $item = $(this).parent('.selected-item');
+
+        removeItem($item);
+    });
+
+    $(document).on('click', function (e) {
+        const $target = $(e.target);
+
+        if (!$target.hasClass('search-container') && !$target.hasClass('search-input') && !$target.hasClass('search-results')) {
+            hideAutocompleteList();
+        }
     });
 };

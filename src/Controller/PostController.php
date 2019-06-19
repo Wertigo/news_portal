@@ -115,8 +115,6 @@ class PostController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->saveRelatedTags($post, $request);
-
             $this->entityManager->persist($post);
             $this->entityManager->flush();
             $this->addFlash('success', 'Post draft - created.');
