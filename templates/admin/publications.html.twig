@@ -4,106 +4,105 @@
 
 {% block body %}
     <h1 class="h3">Admin - Publications</h1>
-    {% if pagination.getTotalItemCount > 0 %}
-        <div class="filter-form">
-            {{ form_start(form, {'attr': {'class': 'form-horizontal col-md-12'}}) }}
+    <div class="filter-form">
+        {{ form_start(form, {'attr': {'class': 'form-horizontal col-md-12'}}) }}
 
-            <form action="{{ path('admin-publications') }}" class="form-horizontal">
-                <div class="form-group">
-                    <label>Author</label>
-                    <div class="ajax-search-collection">
-                        <div class="search-container">
-                            <input type="text"
-                                   class="search-input form-control"
-                                   placeholder="Search ..."
-                                   data-search-url="{{ path('api-search-user-by-email') }}"
-                                   data-multiple="false"
-                            />
-                            <div class="search-results"></div>
-                        </div>
-                        <div class="selected-list"></div>
-                        {{ form_widget(form.author) }}
+        <form action="{{ path('admin-publications') }}" class="form-horizontal">
+            <div class="form-group">
+                <label>Author</label>
+                <div class="ajax-search-collection">
+                    <div class="search-container">
+                        <input type="text"
+                               class="search-input form-control"
+                               placeholder="Search ..."
+                               data-search-url="{{ path('api-search-user-by-email') }}"
+                               data-multiple="false"
+                        />
+                        <div class="search-results"></div>
                     </div>
+                    <div class="selected-list"></div>
+                    {{ form_widget(form.author) }}
+                </div>
 
-                    {% if form.author.vars.valid != true %}
-                        <div class="alert alert-danger">
-                            {{ form_errors(form.author) }}
-                        </div>
-                    {% endif %}
-                </div>
-                <div class="form-group">
-                    <label>Status</label>
-                    {{ form_widget(form.status, {'attr': {'class': 'form-control'}}) }}
+                {% if form.author.vars.valid != true %}
+                    <div class="alert alert-danger">
+                        {{ form_errors(form.author) }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label>Status</label>
+                {{ form_widget(form.status, {'attr': {'class': 'form-control'}}) }}
 
-                    {% if form.status.vars.valid != true %}
-                        <div class="alert alert-danger">
-                            {{ form_errors(form.status) }}
-                        </div>
-                    {% endif %}
-                </div>
-                <div class="form-group">
-                    <label for="form_createdFrom">Created from</label>
-                    {{ form_widget(form.createdFrom, {'attr': {'class': 'form-control col-md-3',}}) }}
+                {% if form.status.vars.valid != true %}
+                    <div class="alert alert-danger">
+                        {{ form_errors(form.status) }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="form_createdFrom">Created from</label>
+                {{ form_widget(form.createdFrom, {'attr': {'class': 'form-control col-md-3',}}) }}
 
-                    {% if form.createdFrom.vars.valid != true %}
-                        <div class="alert alert-danger">
-                            {{ form_errors(form.createdFrom) }}
-                        </div>
-                    {% endif %}
-                </div>
-                <div class="form-group">
-                    <label for="form_createdTo">Created to</label>
-                    {{ form_widget(form.createdTo, {'attr': {'class': 'form-control'}}) }}
+                {% if form.createdFrom.vars.valid != true %}
+                    <div class="alert alert-danger">
+                        {{ form_errors(form.createdFrom) }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="form_createdTo">Created to</label>
+                {{ form_widget(form.createdTo, {'attr': {'class': 'form-control'}}) }}
 
-                    {% if form.createdTo.vars.valid != true %}
-                        <div class="alert alert-danger">
-                            {{ form_errors(form.createdTo) }}
-                        </div>
-                    {% endif %}
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Filter" class="btn btn-primary" />
-                </div>
-            </form>
-            {{ form_end(form) }}
-        </div>
-        <div class="posts-table">
-            <table class="table table-bordered table-hover">
-                <thead>
+                {% if form.createdTo.vars.valid != true %}
+                    <div class="alert alert-danger">
+                        {{ form_errors(form.createdTo) }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Filter" class="btn btn-primary" />
+            </div>
+        </form>
+        {{ form_end(form) }}
+    </div>
+    <div class="posts-table">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>Create data</th>
+                    <th>Author</th>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for post in pagination %}
                     <tr>
-                        <th>id</th>
-                        <th>Create data</th>
-                        <th>Author</th>
-                        <th>Title</th>
-                        <th>Status</th>
-                        <th>Actions</th>
+                        <td>{{ post.id }}</td>
+                        <td>{{ post.createdAt }}</td>
+                        <td>{{ post.author.email }}</td>
+                        <td>{{ post.textStatus }}</td>
+                        <td>{{ post.status }}</td>
+                        <td>
+                            <a href="{{ path('view-template-post', {'post': post.id}) }}">View post template</a>
+                            <form action="{{ path('admin-publish-post', {'post': post.id}) }}" method="post">
+                                <input type="hidden" name="_method" value="put" />
+                                <input type="submit" value="Publish" class="btn btn-success" />
+                            </form>
+                            <form action="{{ path('admin-decline-post', {'post': post.id}) }}" method="post">
+                                <input type="hidden" name="_method" value="put" />
+                                <input type="submit" value="Decline" class="btn btn-danger" />
+                            </form>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    {% for post in pagination %}
-                        <tr>
-                            <td>{{ post.id }}</td>
-                            <td>{{ post.createdAt }}</td>
-                            <td>{{ post.author.email }}</td>
-                            <td>{{ post.textStatus }}</td>
-                            <td>{{ post.status }}</td>
-                            <td>
-                                <a href="{{ path('view-template-post', {'post': post.id}) }}">View post template</a>
-                                <form action="{{ path('admin-publish-post', {'post': post.id}) }}" method="post">
-                                    <input type="hidden" name="_method" value="put" />
-                                    <input type="submit" value="Publish" class="btn btn-success" />
-                                </form>
-                                <form action="{{ path('admin-decline-post', {'post': post.id}) }}" method="post">
-                                    <input type="hidden" name="_method" value="put" />
-                                    <input type="submit" value="Decline" class="btn btn-danger" />
-                                </form>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        {% include 'utils/pagination.html.twig' %}
-    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% include 'utils/pagination.html.twig' %}
+
     <p class="text-right">Total posts: {{ pagination.getTotalItemCount }}</p>
 {% endblock %}

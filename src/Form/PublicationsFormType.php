@@ -38,8 +38,6 @@ class PublicationsFormType extends AbstractType
                 'widget' => 'single_text',
             ])
         ;
-
-        $builder->get('author')->resetViewTransformers();
     }
 
     public function configureOptions(OptionsResolver $resolver)
