@@ -22,8 +22,11 @@
         <div class="comments">
             Comments: <b>{{ post.comments|length }}</b>
         </div>
-        <div class="link">
-            <a href="{{ path('view-post', {'post': post.id}) }}">Read more</a>
+        <div class="publication-date">
+            Publication date: <span class="date">{{ post.createdAt }}</span>
         </div>
+    </div>
+    <div class="link">
+        <a href="{{ path('view-post', {'post': post.id}) }}">Read more</a>
     </div>
 </div>

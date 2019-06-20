@@ -29,7 +29,7 @@ label {
     padding: 10px;
     width: 45%;
     margin-bottom: 15px;
-    height: 200px;
+    height: 240px;
 }
 
 .post-list-view .content {
@@ -58,7 +58,7 @@ label {
     clear: both;;
 }
 
-.post-list-view .post-footer .author, .post-list-view .post-footer .rating, .post-list-view .post-footer .comments  {
+.post-list-view .post-footer .author, .post-list-view .post-footer .rating, .post-list-view .post-footer .comments, .post-list-view .post-footer .publication-date  {
     float: left;
     margin-right: 35px;
 }

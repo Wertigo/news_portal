@@ -9,6 +9,11 @@ use Symfony\Component\HttpFoundation\Response;
 class IndexController extends AbstractController
 {
     /**
+     * @var int
+     */
+    const MAX_ELEMENTS_ON_INDEX_PAGE = 10;
+
+    /**
      * @param PostRepository $postRepository
      *
      * @return Response
@@ -16,7 +21,7 @@ class IndexController extends AbstractController
     public function index(PostRepository $postRepository)
     {
         return $this->render('index/index.html.twig', [
-            'posts' => $postRepository->findPostsForIndexPage(),
+            'posts' => $postRepository->findPostsForIndexPage(static::MAX_ELEMENTS_ON_INDEX_PAGE),
         ]);
     }
 }
