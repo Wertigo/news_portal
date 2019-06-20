@@ -19,7 +19,7 @@ class IndexControllerTest extends WebTestCase
         $this->assertEquals(200, $response->getStatusCode());
 
         // page content <= 10 posts
-        $this->assertLessThan(11, $crawler->filter('html .index-posts .post-list-view')->count());
+        $this->assertLessThanOrEqual(11, $crawler->filter('html .index-posts .post-list-view')->count());
 
         // posts order: created date ASC
         $postDates = [];
@@ -29,7 +29,6 @@ class IndexControllerTest extends WebTestCase
         });
 
         for ($i = 0; $i < count($postDates) - 2; ++$i) {
-            //
             $this->assertGreaterThanOrEqual($postDates[$i + 1], $postDates[$i]);
         }
     }

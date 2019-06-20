@@ -9,7 +9,6 @@ use PHPUnit\Framework\TestCase;
 class UserFactoryTest extends TestCase
 {
     /**
-     * @param UserFactory $userFactory
      * @throws \Exception
      */
     public function testCreateNew()
