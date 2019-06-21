@@ -3,15 +3,15 @@
 namespace App\Service;
 
 use App\Entity\User;
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Common\Persistence\ObjectManager;
 use Psr\Log\LoggerInterface;
 
 class UserService
 {
     /**
-     * @var EntityManagerInterface
+     * @var ObjectManager
      */
-    private $entityManager;
+    private $manager;
 
     /**
      * @var LoggerInterface
@@ -21,33 +21,25 @@ class UserService
     /**
      * UserService constructor.
      *
-     * @param EntityManagerInterface $entityManager
+     * @param ObjectManager          $manager
      * @param LoggerInterface        $logger
      */
-    public function __construct(EntityManagerInterface $entityManager, LoggerInterface $logger)
+    public function __construct(ObjectManager $manager, LoggerInterface $logger)
     {
-        $this->entityManager = $entityManager;
+        $this->manager = $manager;
         $this->logger = $logger;
     }
 
     /**
      * @param User $user
      *
-     * @return bool
+     * @return void
      */
-    public function activateAccount(User $user): bool
+    public function activateAccount(User $user): void
     {
-        if (!$user) {
-            $this->logger->error('No user presenterd for activation');
-
-            return false;
-        }
-
         $user->setStatus(User::STATUS_ACTIVE);
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
-
-        return true;
+        $this->manager->persist($user);
+        $this->manager->flush();
     }
 
     /**
