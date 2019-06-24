@@ -20,10 +20,11 @@ class TagController extends AbstractController
         $searchName = $request->request->get('search', null);
 
         if (null === $searchName) {
-            return new JsonResponse([]);
+            $tags = $tagRepository->findAll();
+        } else {
+            $tags = $tagRepository->findBySimilarName($searchName);
         }
 
-        $tags = $tagRepository->findBySimilarName($searchName);
         $serializedTags = [];
 
         /** @var \App\Entity\Tag $tag */

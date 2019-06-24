@@ -52,7 +52,7 @@ send-post-to-moderation:
 # Api
 api-search-tags:
     path: /api/tag/search
-    methods: POST
+    methods: POST|GET
     controller: App\Controller\Api\TagController::search
 api-search-user-by-email:
     path: /api/user/search-by-email

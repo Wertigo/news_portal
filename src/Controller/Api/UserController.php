@@ -21,10 +21,11 @@ class UserController extends AbstractController
         $searchString = $request->request->get('search', null);
 
         if (null === $searchString) {
-            return new JsonResponse([]);
+            $users = $userRepository->findAll();
+        } else {
+            $users = $userRepository->findBySimilarEmail($searchString);
         }
 
-        $users = $userRepository->findBySimilarEmail($searchString);
         $serializedUsers = [];
 
         /** @var \App\Entity\User $user */
