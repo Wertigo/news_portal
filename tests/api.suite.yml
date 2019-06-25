@@ -1,0 +1,12 @@
+actor: ApiTester
+modules:
+   enabled:
+      - Symfony:
+          app_path: 'src'
+          environment: 'test'
+      - \App\Tests\Helper\Api
+      - Doctrine2:
+          depends: Symfony
+      - REST:
+          url: http://news-portal.dmeo/api/
+          depends: Symfony

@@ -81,7 +81,7 @@ class EmailSender
     private function receiverIsEmpty($receiver): bool
     {
         if ($receiver instanceof User) {
-            return empty($receiver->getEmail());
+            return null === $receiver->getEmail();
         }
 
         return is_string($receiver) && empty($receiver);
