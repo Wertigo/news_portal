@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -96,11 +97,13 @@ class User implements UserInterface
     private $activateToken;
 
     /**
+     * @MaxDepth(1)
      * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="author")
      */
     private $posts;
 
     /**
+     * @MaxDepth(1)
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="author")
      */
     private $comments;
@@ -364,5 +367,18 @@ class User implements UserInterface
     public function isRegistered(): bool
     {
         return static::STATUS_REGISTERED === $this->getStatus();
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'email' => $this->email,
+            'status' => $this->getTextStatus(),
+        ];
     }
 }

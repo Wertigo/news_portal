@@ -579,6 +579,9 @@
     "symfony/property-access": {
         "version": "v4.3.0"
     },
+    "symfony/property-info": {
+        "version": "v4.3.1"
+    },
     "symfony/routing": {
         "version": "4.2",
         "recipe": {
@@ -620,6 +623,9 @@
     },
     "symfony/serializer": {
         "version": "v4.3.1"
+    },
+    "symfony/serializer-pack": {
+        "version": "v1.0.2"
     },
     "symfony/service-contracts": {
         "version": "v1.1.2"

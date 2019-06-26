@@ -1,8 +1,9 @@
 <?php
 
+use App\Factory\UserFactory;
+use App\Repository\UserRepository;
 use Behat\Behat\Context\Context;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
@@ -18,31 +19,48 @@ class FeatureContext implements Context
      */
     private $kernel;
 
-    /**
-     * @var Response|null
-     */
-    private $response;
-
     public function __construct(KernelInterface $kernel)
     {
         $this->kernel = $kernel;
     }
 
     /**
-     * @When a demo scenario sends a request to :path
+     * @BeforeScenario
+     *
+     * @throws Exception
      */
-    public function aDemoScenarioSendsARequestTo(string $path)
+    public function loadTestData()
     {
-        $this->response = $this->kernel->handle(Request::create($path, 'GET'));
+        /** @var UserFactory $userFactory */
+        $userFactory = $this->kernel->getContainer()->get(UserFactory::class);
+        /** @var ObjectManager $manager */
+        $manager = $this->kernel->getContainer()->get('doctrine.orm.default_entity_manager');
+
+        for ($i = 0; $i < 100; $i++) {
+            $user = $userFactory->createNew();
+            $user->setName("Test user: $i")
+                ->setEmail("test_user$i@test.com")
+                ->setPassword('test')
+            ;
+            $manager->persist($user);
+        }
+
+        $manager->flush();
     }
 
     /**
-     * @Then the response should be received
+     * @AfterScenario
      */
-    public function theResponseShouldBeReceived()
+    public function deleteTestData()
     {
-        if ($this->response === null) {
-            throw new \RuntimeException('No response received');
-        }
+        /** @var UserRepository $userRepository */
+        $userRepository = $this->kernel->getContainer()->get(UserRepository::class);
+        $userRepository->createQueryBuilder('u')
+            ->where('u.email LIKE :email')
+            ->setParameter('email', '%@test.com')
+            ->delete()
+            ->getQuery()
+            ->execute()
+        ;
     }
 }

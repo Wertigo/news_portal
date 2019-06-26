@@ -66,6 +66,10 @@ api-post-rating-down:
     path: /api/post/rating-down/{post}
     methods: POST
     controller: App\Controller\Api\PostController::ratingDown
+api-searh-user:
+    path: /api/user/search
+    methods: GET
+    controller: App\Controller\Api\UserController::search
 
 # Admin
 admin-publications:

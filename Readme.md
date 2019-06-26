@@ -64,7 +64,16 @@
     userId - id пользователя
 
 ### Tests
-1. Run
+1. Run phpunit
     ```bash
-    php bin/phpunit
+    ./vendor/bin/phpunit
     ```
+    Run behat
+    ```bash
+    ./vendor/bin/behat
+    ```
+    Run codeception
+    ```bash
+    ./vendor/bin/codecept run api
+    ```
+    

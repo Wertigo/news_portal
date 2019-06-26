@@ -11,19 +11,33 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class UserController extends AbstractController
 {
     /**
+     * @var UserRepository
+     */
+    private $userRepository;
+
+    /**
+     * UserController constructor.
+     * @param UserRepository $userRepository
+     */
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
+    /**
      * @param Request        $request
      * @param UserRepository $userRepository
      *
      * @return JsonResponse
      */
-    public function searchByEmail(Request $request, UserRepository $userRepository): JsonResponse
+    public function searchByEmail(Request $request): JsonResponse
     {
         $searchString = $request->request->get('search', null);
 
         if (null === $searchString) {
-            $users = $userRepository->findAll();
+            $users = $this->userRepository->findAll();
         } else {
-            $users = $userRepository->findBySimilarEmail($searchString);
+            $users = $this->userRepository->findBySimilarEmail($searchString);
         }
 
         $serializedUsers = [];
@@ -37,5 +51,22 @@ class UserController extends AbstractController
         }
 
         return new JsonResponse(['items' => $serializedUsers]);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function search(Request $request, \Symfony\Component\Serializer\SerializerInterface $serializer): JsonResponse
+    {
+        $users = $this->userRepository->findAll();
+        $usersArray = [];
+
+        foreach ($users as $user) {
+            $usersArray[] = $user->toArray();
+        }
+
+        return new JsonResponse(['users' => $usersArray]);
     }
 }
