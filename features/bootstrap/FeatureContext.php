@@ -5,7 +5,6 @@ use App\Repository\UserRepository;
 use Behat\Behat\Context\Context;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpKernel\KernelInterface;
-
 /**
  * This context class contains the definitions of the steps used by the demo 
  * feature file. Learn how to get started with Behat and BDD on Behat's website.
