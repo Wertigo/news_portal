@@ -2,7 +2,8 @@
 1. PHP >= 7.3
 2. Mysql >= 8.0
 3. Yarn
-4. 
+4. Xdebug >= v2.7.2 (for generating code coverage report)
+
 ### Install
 1. Composer install
     ```bash
@@ -62,3 +63,17 @@
     ```
     userId - id пользователя
 
+### Tests
+1. Run phpunit
+    ```bash
+    ./vendor/bin/phpunit
+    ```
+    Run behat
+    ```bash
+    ./vendor/bin/behat
+    ```
+    Run codeception
+    ```bash
+    ./vendor/bin/codecept run api
+    ```
+    

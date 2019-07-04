@@ -2,10 +2,12 @@
 
 namespace App\Repository;
 
+use App\Entity\Comment;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 
 /**
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
@@ -91,5 +93,87 @@ class UserRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
         ;
+    }
+
+    /**
+     * @param string $email
+     *
+     * @return mixed
+     *
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
+    public function totalCountByEmail($email = null)
+    {
+        $qb = $this->createQueryBuilder('u')
+            ->select('COUNT(u.id)')
+        ;
+
+        if (null !== $email) {
+            $qb->where('u.email LIKE :email')
+                ->setParameter('email', "%$email%")
+            ;
+        }
+
+        $countArray = $qb->getQuery()->getSingleResult();
+        $count = (int) $countArray[1] ?? 0;
+
+        return $count;
+    }
+
+    /**
+     * @param array $params
+     * @param bool $asCount
+     *
+     * @return mixed
+     *
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
+    public function findAllWithOffsetAndLimitByEmail(array $params = [], $asCount = false)
+    {
+        $email = $params['email'] ?? null;
+        $offset = $params['offset'] ?? null;
+        $limit = $params['limit'] ?? null;
+        $userHavePosts = $params['user_have_posts'] ?? null;
+        $userHaveComments = $params['user_have_comments'] ?? null;
+
+        $qb = $this->createQueryBuilder('u');
+
+        if (null !== $email) {
+            $qb->andWhere('u.email LIKE :email')
+                ->setParameter('email', "$email%")
+            ;
+        }
+
+        if ($userHaveComments) {
+            $qb->leftJoin('u.comments', 'c')
+                ->having('COUNT(c.id) > 0')
+                ->groupBy('u.id')
+            ;
+        }
+
+        if ($userHavePosts) {
+            $qb->leftJoin('u.posts', 'p')
+                ->having('COUNT(p.id) > 0')
+                ->groupBy('u.id')
+            ;
+        }
+
+        if (null !== $offset) {
+            $qb->setFirstResult($offset);
+        }
+
+        if ($asCount) {
+            $users = $qb->getQuery()->getResult();
+
+            return count($users);
+        }
+
+        if (null !== $limit) {
+            $qb->setMaxResults($limit);
+        }
+
+        return $qb->getQuery()->getResult();
     }
 }

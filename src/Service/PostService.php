@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Entity\Post;
 use Doctrine\Common\Persistence\ObjectManager;
+use Psr\Log\LoggerInterface;
 
 class PostService
 {
@@ -12,23 +13,45 @@ class PostService
      */
     private $manager;
 
-    public function __construct(ObjectManager $manager)
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    public function __construct(ObjectManager $manager, LoggerInterface $logger)
     {
         $this->manager = $manager;
+        $this->logger = $logger;
+    }
+
+    /**
+     * @param Post $post
+     * @return bool
+     *
+     * @throws \Exception
+     */
+    public function sendPostToModerate(Post $post): bool
+    {
+        if (!$post->isPostCanBeModerate()) {
+            $this->logger->error("Post can't be send to moderate, because have incorrect status");
+            return false;
+        }
+
+        $post->setStatus(Post::STATUS_MODERATION_CHECK);
+        $this->manager->persist($post);
+        $this->manager->flush();
+
+        return true;
     }
 
     /**
      * @param Post $post
      *
-     * @throws \Exception
+     * @return void
      */
-    public function sendPostToModerate(Post $post): void
+    public function publishPost(Post $post): void
     {
-        if (!$post->isPostCanBeModerate()) {
-            throw new \Exception('Post can\'t be send to moderate, because have incorrect status');
-        }
-
-        $post->setStatus(Post::STATUS_MODERATION_CHECK);
+        $post->setStatus(Post::STATUS_PUBLISHED);
         $this->manager->persist($post);
         $this->manager->flush();
     }
@@ -36,36 +59,12 @@ class PostService
     /**
      * @param Post $post
      *
-     * @return bool
+     * @return void
      */
-    public function publishPost(Post $post): bool
+    public function declinePost(Post $post): void
     {
-        try {
-            $post->setStatus(Post::STATUS_PUBLISHED);
-            $this->manager->persist($post);
-            $this->manager->flush();
-        } catch (\Exception $e) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * @param Post $post
-     *
-     * @return bool
-     */
-    public function declinePost(Post $post): bool
-    {
-        try {
-            $post->setStatus(Post::STATUS_DECLINED);
-            $this->manager->persist($post);
-            $this->manager->flush();
-        } catch (\Exception $e) {
-            return false;
-        }
-
-        return true;
+        $post->setStatus(Post::STATUS_DECLINED);
+        $this->manager->persist($post);
+        $this->manager->flush();
     }
 }

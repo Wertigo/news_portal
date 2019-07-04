@@ -26,17 +26,23 @@ class PostRepository extends ServiceEntityRepository
     }
 
     /**
+     * @param int limit
+     *
      * @return mixed
      */
-    public function findPostsForIndexPage()
+    public function findPostsForIndexPage($limit = null)
     {
-        return $this->createQueryBuilder('p')
+        $qb = $this->createQueryBuilder('p')
             ->andWhere('p.status = :status')
             ->setParameter('status', Post::STATUS_PUBLISHED)
             ->orderBy('p.created_at', 'DESC')
-            ->getQuery()
-            ->getResult()
         ;
+
+        if (null !== $limit && is_int($limit)) {
+            $qb->setMaxResults($limit);
+        }
+
+        return $qb->getQuery()->getResult();
     }
 
     /**

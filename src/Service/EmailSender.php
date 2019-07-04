@@ -58,6 +58,12 @@ class EmailSender
      */
     public function sendRegistrationCompleteEmail(User $user): bool
     {
+        if ($this->receiverIsEmpty($user)) {
+            $this->logger->error("Can't send registration complete email without user email");
+
+            return false;
+        }
+
         return $this->sendEmail(
             'Registration complete',
             $user->getEmail(),
@@ -66,6 +72,19 @@ class EmailSender
                 'name' => $user->getName(),
                 'activateToken' => $user->getActivateToken(),
         ]);
+    }
+
+    /**
+     * @param mixed $receiver
+     * @return bool
+     */
+    private function receiverIsEmpty($receiver): bool
+    {
+        if ($receiver instanceof User) {
+            return null === $receiver->getEmail();
+        }
+
+        return is_string($receiver) && empty($receiver);
     }
 
     /**
@@ -79,6 +98,12 @@ class EmailSender
      */
     private function sendEmail($subject, $receiver, $sender, $template, $params): bool
     {
+        if ($this->receiverIsEmpty($receiver)) {
+            $this->logger->error("Can't send email without user email");
+
+            return false;
+        }
+
         try {
             $message = (new SwiftMessage($subject))
                 ->setFrom($sender)
@@ -101,6 +126,12 @@ class EmailSender
      */
     public function sendActivationCompleteEmail(User $user): bool
     {
+        if ($this->receiverIsEmpty($user)) {
+            $this->logger->error("Can't send activation complete email without user email");
+
+            return false;
+        }
+
         return $this->sendEmail(
             'Activation complete',
             $user->getEmail(),

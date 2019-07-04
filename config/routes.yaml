@@ -52,7 +52,7 @@ send-post-to-moderation:
 # Api
 api-search-tags:
     path: /api/tag/search
-    methods: POST
+    methods: POST|GET
     controller: App\Controller\Api\TagController::search
 api-search-user-by-email:
     path: /api/user/search-by-email
@@ -66,6 +66,10 @@ api-post-rating-down:
     path: /api/post/rating-down/{post}
     methods: POST
     controller: App\Controller\Api\PostController::ratingDown
+api-searh-user:
+    path: /api/user/search
+    methods: GET
+    controller: App\Controller\Api\UserController::search
 
 # Admin
 admin-publications:
