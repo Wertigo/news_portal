@@ -25,17 +25,16 @@ services:
       restart: always
       ports:
         - "8800:3306"
+      volumes:
+        - ./docker/mysql/init:/docker-entrypoint-initdb.d
+        - ./docker/data/mysql:/var/lib/mysql
       environment:
         MYSQL_ROOT_PASSWORD: 1234
         MYSQL_DATABASE: news_portal
         MYSQL_USER: news_portal
         MYSQL_PASSWORD: password
       networks:
-        news_portal_docker_network:
-          ipv4_address: 192.168.200.8
+        - news_portal_docker_network
 networks:
   news_portal_docker_network:
     driver: bridge
-    ipam:
-      config:
-        - subnet: 192.168.200.0/26
