@@ -26,3 +26,5 @@ behat.yml
 .phpunit.result.cache
 ./coverage
 ###< phpunit/phpunit ###
+
+./docker/db/*
