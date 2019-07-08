@@ -3,7 +3,7 @@ services:
   nginx:
     image: nginx:1.12.1
     ports:
-      - 80:80
+      - 8080:80
     links:
       - php
     volumes:
@@ -12,7 +12,9 @@ services:
     networks:
       - news_portal_docker_network
   php:
-    build: ./docker/php
+    build:
+      context: ./
+      dockerfile: ./docker/php/Dockerfile
     ports:
       - 9000:9000
     volumes:

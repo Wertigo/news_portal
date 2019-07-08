@@ -3,17 +3,23 @@ FROM php:7.3-fpm
 LABEL maintainer="Daniil Karnaukhov <kdswto@gmail.com>"
 
 # install utils
-RUN apt-get update && apt-get install -y --fix-missing \
+RUN apt-get update -y && apt-get install -y --fix-missing \
+    aptitude \
     zlib1g-dev \
     libzip-dev \
     wget \
     nano \
-    vim
-
+    vim \
+    curl \
+    unzip \
+    git \
+    software-properties-common
 
 # install zip extension
 RUN docker-php-ext-install zip pdo pdo_mysql
 
-## Install composer globally
-RUN echo "Install composer globally"
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer
+# install nodejs and yarn
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
+RUN apt-get update -y && apt-get install -y --fix-missing \
+    nodejs
+RUN npm install -g yarn

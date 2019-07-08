@@ -27,4 +27,4 @@ behat.yml
 ./coverage
 ###< phpunit/phpunit ###
 
-./docker/db/*
+./docker/db/mysql/*
