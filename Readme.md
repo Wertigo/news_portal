@@ -44,6 +44,18 @@
     php bin/console doctrine:fixtures:load --append
     ```
 
+### Docker setup
+1. Run docker:
+    ```bash
+    docker-compose up
+    ```
+2. Go inside php container:
+    ```bash
+    docker-compose exex php bash
+    ```
+3. 1-9 from "Install part"
+
+
 ### Utils
 1. php-cs-fixer run:
 
